@@ -1,9 +1,6 @@
 package com.lkc.controller;
 
-import com.lkc.model.DownLink.ControlInfo;
-import com.lkc.model.DownLink.RuleInfo;
-import com.lkc.model.DownLink.Sensor;
-import com.lkc.model.DownLink.SensorDebug;
+import com.lkc.model.DownLink.*;
 import com.lkc.model.Industry.deviceInfo.Rule;
 import com.lkc.service.DownInfoService;
 import net.sf.json.JSONObject;
@@ -12,6 +9,8 @@ import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -61,8 +60,10 @@ public class DownLinkController {
         return downInfoService.downData(message, deviceId, uid, controlInfo.getTopic());
     }
 
+    /********************************添加传感器*****************************************************/
+
     //下行 添加传感器时 测试
-    @PostMapping(value = "/down/addtest")
+    @PostMapping(value = "/down/addsensor/test")
     public String addTest(@RequestBody Sensor sensor, @RequestParam String deviceId, HttpServletRequest httpServletRequest) {
         HttpSession httpSession = httpServletRequest.getSession();
         String uid = httpSession.getId();
@@ -77,12 +78,76 @@ public class DownLinkController {
     }
 
     //下行 添加传感器时 确认
-    @PostMapping(value = "/down/addconfirm")
+    @PostMapping(value = "/down/addsensor/confirm")
     public String addConfirm(@RequestBody Sensor sensor, @RequestParam String deviceId, HttpServletRequest httpServletRequest) {
         HttpSession httpSession = httpServletRequest.getSession();
         String uid = httpSession.getId();
 
         sensor.setOperation("Addcustomconfirm");
+        sensor.setTopic(deviceId + "_" + uid + "_" + sensor.getTarget() + "_" + sensor.getOperation());
+
+        JSONObject jsonObject = JSONObject.fromObject(sensor);
+        String message = jsonObject.toString();
+
+        return downInfoService.downData(message, deviceId, uid, sensor.getTopic());
+    }
+
+    /********************************添加继电器*****************************************************/
+
+    //下行 添加继电器时 测试
+    @PostMapping(value = "/down/addrelay/test")
+    public String addRelayTest(@RequestParam String deviceId, @RequestParam String addr,
+                               @RequestParam String code485,
+                               HttpServletRequest httpServletRequest){
+        HttpSession httpSession = httpServletRequest.getSession();
+        String uid = httpSession.getId();
+
+        Type type = new Type();
+        type.setTypeName("relayState");
+        type.setByteStart("3");
+        type.setByteCount("1");
+        type.setDataDefine("int");
+        List<Type> types = new ArrayList<>();
+        types.add(type);
+
+        Sensor sensor = new Sensor();
+        sensor.setTarget("sensor");
+        sensor.setOperation("Addcustomtest");
+        sensor.setAddr(addr);
+        sensor.setCode485(code485);
+        sensor.setReturnLength("6");
+        sensor.setTypes(types);
+        sensor.setTopic(deviceId + "_" + uid + "_" + sensor.getTarget() + "_" + sensor.getOperation());
+
+        JSONObject jsonObject = JSONObject.fromObject(sensor);
+        String message = jsonObject.toString();
+
+        return downInfoService.downData(message, deviceId, uid, sensor.getTopic());
+    }
+
+    //下行 添加继电器时 确认
+    @PostMapping(value = "/down/addrelay/confirm")
+    public String addRelayConfirm(@RequestParam String deviceId, @RequestParam String addr,
+                                  @RequestParam String code485,
+                                  HttpServletRequest httpServletRequest){
+        HttpSession httpSession = httpServletRequest.getSession();
+        String uid = httpSession.getId();
+
+        Type type = new Type();
+        type.setTypeName("relayState");
+        type.setByteStart("3");
+        type.setByteCount("1");
+        type.setDataDefine("int");
+        List<Type> types = new ArrayList<>();
+        types.add(type);
+
+        Sensor sensor = new Sensor();
+        sensor.setTarget("sensor");
+        sensor.setOperation("Addcustomconfirm");
+        sensor.setAddr(addr);
+        sensor.setCode485(code485);
+        sensor.setReturnLength("6");
+        sensor.setTypes(types);
         sensor.setTopic(deviceId + "_" + uid + "_" + sensor.getTarget() + "_" + sensor.getOperation());
 
         JSONObject jsonObject = JSONObject.fromObject(sensor);
@@ -107,6 +172,9 @@ public class DownLinkController {
         String message = jsonObject.toString();
         return downInfoService.downData(message, deviceId, uid, controlInfo.getTopic());
     }
+
+
+    /********************************关于规则*****************************************************/
 
     //下行 添加一条规则
     @PostMapping(value = "/down/addrule")
@@ -146,6 +214,7 @@ public class DownLinkController {
         return downInfoService.downData(message, deviceId, uid, ruleInfo.getTopic());
 
     }
+
 
     //下行 更新开关状态
     @PostMapping(value = "/down/updatestate")
