@@ -1,6 +1,7 @@
 package com.lkc.mqttUp;
 
 import com.lkc.config.MqttConfig;
+import com.lkc.tool.UID;
 import org.eclipse.paho.client.mqttv3.MqttClient;
 import org.eclipse.paho.client.mqttv3.MqttConnectOptions;
 import org.eclipse.paho.client.mqttv3.MqttException;
@@ -29,8 +30,7 @@ public class UpMqtt {
     }
 
     public static UpMqtt getInstance() {
-        Random random = new Random();
-        clientid = String.valueOf(random.nextInt(10000));
+        clientid = UID.getUid();
         return upMqtt;
     }
 

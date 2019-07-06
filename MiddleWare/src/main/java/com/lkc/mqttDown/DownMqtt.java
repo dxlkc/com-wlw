@@ -1,13 +1,13 @@
 package com.lkc.mqttDown;
 
 import com.lkc.mqttUp.UpMqtt;
+import com.lkc.tool.UID;
 import org.eclipse.paho.client.mqttv3.MqttClient;
 import org.eclipse.paho.client.mqttv3.MqttConnectOptions;
 import org.eclipse.paho.client.mqttv3.MqttException;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
 import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence;
 
-import java.util.Random;
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;
 
@@ -15,14 +15,14 @@ import java.util.concurrent.locks.Lock;
 public class DownMqtt {
 
     private String HOST = UpMqtt.getInstance().getHost();
-    private String clientid = String.valueOf(new Random().nextInt(10000));
+    private String clientid = UID.getUid();
     //板子返回信息时 发布的主题
     private String sub_topic;
     private MqttClient client;
     //需要传入的必要数据
     private Lock lock;
     private Condition condition;
-    private String UID;
+    private String UserID;
 
     public void setSub_topic(String topic) {
         sub_topic = topic;
@@ -34,7 +34,7 @@ public class DownMqtt {
     }
 
     public void setUid(String uid) {
-        UID = uid;
+        UserID = uid;
     }
 
     //可选配置
@@ -51,7 +51,7 @@ public class DownMqtt {
         MqttConnectOptions options = getOptions();
         try {
             client = new MqttClient(HOST, clientid, new MemoryPersistence());
-            client.setCallback(new DownCallback(lock, condition, UID));
+            client.setCallback(new DownCallback(lock, condition, UserID));
             client.connect(options);
             client.subscribe(sub_topic);
             //System.out.println("mqtt proxy : 连接成功");
