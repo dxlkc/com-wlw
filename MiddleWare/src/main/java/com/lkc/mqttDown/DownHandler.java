@@ -1,6 +1,8 @@
 package com.lkc.mqttDown;
 
 import com.lkc.model.CustomMap.SingleMap;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Base64;
 import java.util.concurrent.TimeUnit;
@@ -9,6 +11,8 @@ import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
 public class DownHandler {
+    //日志记录器
+    private Logger logger = LoggerFactory.getLogger(getClass());
 
     private Lock lock = new ReentrantLock();
     private Condition condition = lock.newCondition();
@@ -38,8 +42,8 @@ public class DownHandler {
         try {
             condition.await(5, TimeUnit.SECONDS);
         } catch (InterruptedException e) {
-            e.printStackTrace();
-            return "接收数据超时";
+            logger.warn("condition await 发生异常");
+            return "接收数据发生异常";
         }
         mqtt.disconnet();
 
@@ -49,6 +53,7 @@ public class DownHandler {
         SingleMap singleMap = SingleMap.getInstance();
         String res = singleMap.get(uid);
         if (null == res) {
+            logger.warn("接收数据超时");
             return "接收数据超时";
         }
 

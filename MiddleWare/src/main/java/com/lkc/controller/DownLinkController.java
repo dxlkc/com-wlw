@@ -18,7 +18,7 @@ public class DownLinkController {
     @Resource
     private DownInfoService downInfoService;
 
-    //下行 用户API调试接口（debug） ok
+    //下行 用户API调试接口（debug）
     @PostMapping(value = "/down/debug")
     public String debug(@RequestParam String content, @RequestParam String deviceId,
                         HttpServletRequest httpServletRequest) {
@@ -36,8 +36,12 @@ public class DownLinkController {
         return downInfoService.downData(message, deviceId, uid, sensorDebug.getTopic());
     }
 
-    //通用下行信号（控制继电器 溶解氧 等设备）
-    //addr 可以为空 ， 不为空表示是一个继电器
+    //通用下行信号
+    //继电器控制 ：target，operation，content为继电器站号，addr为控制强电设备的位置
+    //溶解氧控制 ：target，operation，content为485指令
+    //添加预设传感器 ：target，operation，content为传感器站号
+    //删除预设传感器 ：target，operation，content为传感器站号
+    //设置发送速率 ： target，operation，content为发送时间间隔
     @PostMapping(value = "/down/control")
     public String downCtl(@RequestParam String target, @RequestParam String operation,
                           @RequestParam String content, @RequestParam String deviceId,
@@ -171,7 +175,6 @@ public class DownLinkController {
         String message = jsonObject.toString();
         return downInfoService.downData(message, deviceId, uid, controlInfo.getTopic());
     }
-
 
     /********************************关于规则*****************************************************/
 

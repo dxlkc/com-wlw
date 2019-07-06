@@ -85,14 +85,12 @@ public class UpCallback implements MqttCallback {
                 String MAC = jsonObject.getString("MAC");
                 String sendRate = jsonObject.getString("sendRate");
                 String Time = jsonObject.getString("Time");
-                System.out.println("MAC:" + MAC + "\nsendRate:" + sendRate + "\nTime:" + Time);
 
                 JSONArray Sensors = null;
                 //第一层获取 不定长对象数组 Data
                 if (null != jsonObject.getJSONArray("Sensors")) {
                     Sensors = jsonObject.getJSONArray("Sensors");
                 }
-                System.out.println("Sensors:" + Sensors.toString());
 
                 if (Sensors.size() > 0) {
 
@@ -101,14 +99,11 @@ public class UpCallback implements MqttCallback {
                         String addr = object.getString("addr");
                         String code = object.getString("code_485");
 
-                        System.out.println("addr:" + addr + "\ncode:" + code);
-
                         Map<String, String> Data = object.getJSONObject("Data");
 
                         for (Map.Entry<String, String> entry : Data.entrySet()) {
                             String type = entry.getKey();
                             String value = entry.getValue();
-                            System.out.println(entry.getKey() + " : " + entry.getValue());
 
                             switch (type) {
                                 case "latitude-degree":
@@ -167,10 +162,8 @@ public class UpCallback implements MqttCallback {
                         // 调用mongodb 存经 sendRate
                         SaveData.saveData.updateSendRate(MAC, sendRate);
                     }
-
                     // 调用user service 进行 预警处理
                     SaveData.saveData.thresholdHandler(MAC, threshold, Time);
-
                 } //end if
             } //end run
         });

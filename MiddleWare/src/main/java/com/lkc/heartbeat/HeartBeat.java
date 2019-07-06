@@ -6,6 +6,8 @@ import com.lkc.model.Industry.deviceInfo.Device;
 import com.lkc.mqttDown.DownHandler;
 import com.lkc.tool.MyThreadPoolExecutor;
 import net.sf.json.JSONObject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
@@ -19,12 +21,15 @@ public class HeartBeat {
     @Resource
     private MongoFeignClient mongoFeignClient;
 
+    //日志记录器
+    private Logger logger = LoggerFactory.getLogger(getClass());
+
     public void start() {
 
         MyThreadPoolExecutor.getInstance().getMyThreadPoolExecutor().execute(new Runnable() {
             @Override
             public void run() {
-                try{
+                try {
                     //定时轮询
                     while (true) {
                         Set<String> stringSet = new HashSet<>();
@@ -32,7 +37,7 @@ public class HeartBeat {
 
 
                         for (Device device : deviceList) {
-                            if (stringSet.contains(device.getDeviceId())){
+                            if (stringSet.contains(device.getDeviceId())) {
                                 continue;
                             }
                             stringSet.add(device.getDeviceId());
@@ -55,23 +60,25 @@ public class HeartBeat {
                             String receive = downHandler.sendDownMesg(device.getDeviceId(), uid, sensorDebug.getTopic(), message);
 
                             //修改状态
-                            if (!"接收数据超时".equals(receive)){
-                                mongoFeignClient.updateLinkState(device.getDeviceId(),"已入网");
+                            if (!"接收数据超时".equals(receive)) {
+                                mongoFeignClient.updateLinkState(device.getDeviceId(), "已入网");
+                                logger.info(device.getDeviceId() + " 已入网");
                             } else {
-                                mongoFeignClient.updateLinkState(device.getDeviceId(),"未入网");
+                                mongoFeignClient.updateLinkState(device.getDeviceId(), "未入网");
+                                logger.info(device.getDeviceId() + " 未入网");
                             }
                         }
 
                         //定时
                         try {
                             Thread.sleep(300000);
-                        } catch (Exception e){
-                            e.printStackTrace();
+                        } catch (Exception e) {
+                            logger.warn("sleep定时异常 : " + e.getMessage());
                             start();
                         }
 
                     }
-                } catch (Exception e){
+                } catch (Exception e) {
                     start();
                 }
             }

@@ -7,12 +7,16 @@ import org.eclipse.paho.client.mqttv3.MqttConnectOptions;
 import org.eclipse.paho.client.mqttv3.MqttException;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
 import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;
 
 //短暂开启  用户进行下发操作
 public class DownMqtt {
+    //日志记录器
+    private Logger logger = LoggerFactory.getLogger(getClass());
 
     private String HOST = UpMqtt.getInstance().getHost();
     private String clientid = UID.getUid();
@@ -54,10 +58,9 @@ public class DownMqtt {
             client.setCallback(new DownCallback(lock, condition, UserID));
             client.connect(options);
             client.subscribe(sub_topic);
-            //System.out.println("mqtt proxy : 连接成功");
+            logger.info("下行--连接 mqtt poxy 成功");
         } catch (MqttException e) {
-            //System.out.println("测试连通性 ： 连接 mqtt proxy 失败...");
-            e.printStackTrace();
+            logger.warn("下行--连接 mqtt proxy 失败 ： " + e.getMessage());
             connect();
         }
     }
@@ -67,7 +70,7 @@ public class DownMqtt {
         try {
             client.publish(topic, new MqttMessage(message.getBytes()));
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.warn("下行--发布信息异常 ：" + e.getMessage());
         }
     }
 
@@ -76,9 +79,8 @@ public class DownMqtt {
         try {
             client.disconnect();
         } catch (MqttException e) {
-            e.printStackTrace();
-            System.out.println("断开连接失败");
+            logger.warn("下行--断开连接失败");
         }
-        System.out.println("断开连接成功");
+        logger.info("下行--断开连接成功");
     }
 }
