@@ -244,6 +244,4 @@ public class InfluxdbDaoImpl implements InfluxdbDao {
         }
         return res;
     }
-
-
 }
