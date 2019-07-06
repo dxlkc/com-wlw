@@ -41,6 +41,7 @@ public class DownLinkController {
     //溶解氧控制 ：target，operation，content为485指令
     //添加预设传感器 ：target，operation，content为传感器站号
     //删除预设传感器 ：target，operation，content为传感器站号
+    //删除继电器 ：target，operation，content为继电器站号
     //设置发送速率 ： target，operation，content为发送时间间隔
     @PostMapping(value = "/down/control")
     public String downCtl(@RequestParam String target, @RequestParam String operation,

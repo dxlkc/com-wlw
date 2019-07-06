@@ -58,15 +58,15 @@ public class RelayController {
 
     @PostMapping(value = "/update/machine")
     public long updateMachineInfo(@RequestParam String deviceId, @RequestParam String relayAddr,
-                                  @RequestParam String machineName, @RequestParam String newName,
+                                  @RequestParam String machinePosition, @RequestParam String newName,
                                   @RequestParam String newRemark, @RequestParam String newPostion) {
-        return relayDao.updateMachineInfo(deviceId, relayAddr, machineName, newName, newRemark, newPostion);
+        return relayDao.updateMachineInfo(deviceId, relayAddr, machinePosition, newName, newRemark, newPostion);
     }
 
     @PostMapping(value = "/update/machineState")
     public long updateMachineState(@RequestParam String deviceId, @RequestParam String relayAddr,
-                                   @RequestParam String machineName, @RequestParam String state) {
-        return relayDao.updateMachineState(deviceId, relayAddr, machineName, state);
+                                   @RequestParam String machinePosition, @RequestParam String state) {
+        return relayDao.updateMachineState(deviceId, relayAddr, machinePosition, state);
     }
 
     /****************删除********************/
@@ -79,7 +79,7 @@ public class RelayController {
 
     @PostMapping(value = "/delete/machine")
     public long deleteByMachineName(@RequestParam String industryId, @RequestParam String deviceId,
-                                    @RequestParam String relayAddr, @RequestParam String machineName) {
-        return relayDao.deleteByMachineName(industryId, deviceId, relayAddr, machineName);
+                                    @RequestParam String relayAddr, @RequestParam String machinePosition) {
+        return relayDao.deleteByMachineName(industryId, deviceId, relayAddr, machinePosition);
     }
 }

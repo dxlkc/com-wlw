@@ -55,6 +55,8 @@ public class UpCallback implements MqttCallback {
     //是个单线程操作 所以最好把 数据处理扔到线程里
     @Override
     public void messageArrived(String topic, MqttMessage mqttMessage) throws Exception {
+        logger.info("上行--收到环境数据");
+
         //进行数据解析
         MyThreadPoolExecutor.getInstance().getMyThreadPoolExecutor().execute(new Runnable() {
             @Override
