@@ -4,12 +4,10 @@ import com.lkc.InfluxdbDao.InfluxdbDao;
 import com.lkc.config.InfluxdbConfig;
 import com.lkc.model.Log.CustomLogger;
 import com.lkc.tool.TimeChange;
-import org.hibernate.validator.constraints.pl.REGON;
 import org.influxdb.InfluxDB;
 import org.influxdb.dto.Point;
 import org.influxdb.dto.Query;
 import org.influxdb.dto.QueryResult;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import javax.annotation.Resource;

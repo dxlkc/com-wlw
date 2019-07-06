@@ -13,7 +13,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
-import java.util.Random;
 
 public class UpMqtt {
     //日志记录器
@@ -62,7 +61,7 @@ public class UpMqtt {
 
         if (!client.isConnected()) {
             client.connect(options);
-            logger.debug("mqtt proxy : 连接成功");
+            logger.debug("上行--连接 mqtt proxy 成功");
         }
         //发布时 需要删除
         client.subscribe("6af6188e14aa");
@@ -73,7 +72,8 @@ public class UpMqtt {
         try {
             client.publish(topic, new MqttMessage(message.getBytes()));
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.warn("上行--发布信息异常 ：" + e.getMessage());
+            ;
         }
     }
 
@@ -82,7 +82,7 @@ public class UpMqtt {
         try {
             client.subscribe(topic, 1);
         } catch (MqttException e) {
-            e.printStackTrace();
+            logger.warn("上行--订阅发生异常 ：" + e.getMessage());
         }
     }
 
@@ -91,7 +91,8 @@ public class UpMqtt {
         try {
             client.unsubscribe(topic);
         } catch (MqttException e) {
-            e.printStackTrace();
+            logger.warn("上行--取消订阅发生异常 ：" + e.getMessage());
+            cancelsub(topic);
         }
     }
 
@@ -102,10 +103,10 @@ public class UpMqtt {
                 Thread.sleep(2000);
                 connect();
             } catch (MqttException e) {
-                logger.warn("无法连接MQTT代理服务器...");
+                logger.warn("上行--无法连接MQTT代理服务器 ：" + e.getMessage());
                 continue;
             } catch (Exception e) {
-                e.printStackTrace();
+                logger.warn("上行--连接时发生异常 ：" + e.getMessage());
                 continue;
             }
             return;
