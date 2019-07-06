@@ -98,7 +98,7 @@ public class UserController {
     }
 
     //查询操作日志  按deviceId和时间段 查询
-    @PostMapping(value = "/long/findByDT")
+    @PostMapping(value = "/log/findByDT")
     public String findLogByDeviceIdAndTime(@RequestParam String industryId, @RequestParam String deviceId,
                                            @RequestParam String starttime, @RequestParam String endtime){
         ArrayList<CustomLogger> customLoggers = influxdbDao.findLogByDeviceIdAndTime(starttime,endtime,deviceId,industryId+"_opslog");

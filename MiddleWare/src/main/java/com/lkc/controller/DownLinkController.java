@@ -11,7 +11,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 @RestController
 @RequestMapping(value = "/user")
@@ -215,8 +214,7 @@ public class DownLinkController {
 
     }
 
-
-    //下行 更新开关状态
+    //下行 更新规则开关状态
     @PostMapping(value = "/down/updatestate")
     public String updateState(@RequestParam String deviceId, @RequestParam String ruleId, @RequestParam String switchState,
                               HttpServletRequest httpServletRequest){
