@@ -6,7 +6,25 @@ import java.util.ArrayList;
 public class ReturnData {
     private String deviceId;
     private String type;
-    private ArrayList<ArrayList<String>> data;
+    private Float max;
+    private Float min;
+    private ArrayList<HistoryData> data;
+
+    public Float getMax() {
+        return max;
+    }
+
+    public void setMax(Float max) {
+        this.max = max;
+    }
+
+    public Float getMin() {
+        return min;
+    }
+
+    public void setMin(Float min) {
+        this.min = min;
+    }
 
     public String getDeviceId() {
         return deviceId;
@@ -24,11 +42,11 @@ public class ReturnData {
         this.type = type;
     }
 
-    public ArrayList<ArrayList<String>> getData() {
+    public ArrayList<HistoryData> getData() {
         return data;
     }
 
-    public void setData(ArrayList<ArrayList<String>> data) {
+    public void setData(ArrayList<HistoryData> data) {
         this.data = data;
     }
 }

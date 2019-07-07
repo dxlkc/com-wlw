@@ -48,29 +48,20 @@ public class IndustryServiceImpl implements IndustryService {
 
     //修改继电器状态 （同时修改继电器下设备的状态）
     public long updateRelayPinsState(String deviceId, String relayAddr, String newPinsState) {
-        int parseInt = Integer.parseInt(relayAddr, 16);
-        String addr = String.valueOf(parseInt);
+        int pinsState = Integer.valueOf(newPinsState);
 
-        char[] str = newPinsState.toCharArray();
-        int size = str.length;
-        Relay relay = relayDao.find(deviceId, addr);
+        Relay relay = relayDao.find(deviceId, relayAddr);
         if (null == relay) {
             return 1;
         }
         List<Machine> machineList = relay.getMachineList();
 
-        String state;
         for (Machine machine : machineList) {
-            if ("0".equals(newPinsState)) {
-                state = "0";
-            } else {
-                int start = size - Integer.valueOf(machine.getMachinePostion());
-                state = newPinsState.substring(start, start + 1);
-            }
-            relayDao.updateMachineState(deviceId, addr, machine.getMachinePostion(), state);
+            int state = 0x1 & (pinsState >> (Integer.valueOf(machine.getMachinePosition())-1));
+            relayDao.updateMachineState(deviceId, relayAddr, machine.getMachinePosition(), String.valueOf(state));
         }
 
-        return relayDao.updatePinsState(deviceId, addr, newPinsState);
+        return relayDao.updatePinsState(deviceId, relayAddr, newPinsState);
     }
 
 }

@@ -24,7 +24,7 @@ public interface RelayDao {
     long updatePinsState(String deviceId, String relayAddr, String newPinsState);
 
     long updateMachineInfo(String deviceId, String relayAddr, String machinePosition,
-                           String newName, String newPostion);
+                           String newName, String newPosition);
 
     long updateMachineState(String deviceId, String relayAddr, String machinePosition, String state);
 

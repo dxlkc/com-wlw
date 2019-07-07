@@ -26,7 +26,7 @@ public class Relay implements Serializable {
     //获取某个强电设备 在数组中的位置
     public int getMachineIndexByPosition(String machinePosition) {
         for (int i = 0; i < machineList.size(); i++) {
-            if (machinePosition.equals(machineList.get(i).getMachinePostion())) {
+            if (machinePosition.equals(machineList.get(i).getMachinePosition())) {
                 return i;
             }
         }

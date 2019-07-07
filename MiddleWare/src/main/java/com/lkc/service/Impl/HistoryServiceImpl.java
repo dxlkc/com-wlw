@@ -3,6 +3,7 @@ package com.lkc.service.Impl;
 import com.lkc.FeignClient.MongoFeignClient;
 import com.lkc.InfluxdbDao.InfluxdbDao;
 import com.lkc.model.Industry.sensorInfo.SensorInfo;
+import com.lkc.model.ReturnUser.HistoryData;
 import com.lkc.model.ReturnUser.ReturnData;
 import com.lkc.service.HistoryService;
 import org.springframework.stereotype.Service;
@@ -29,8 +30,12 @@ public class HistoryServiceImpl implements HistoryService {
             returnData.setType(sensorInfo.getType());
 
             String measurement = deviceId + "_" + sensorInfo.getSensorAddr() + "_" + sensorInfo.getType();
-            ArrayList<ArrayList<String>> list =
+            ArrayList<HistoryData> list =
                     influxdbDao.findByTime(start, end, measurement);
+
+            SensorInfo sensorInfo1 = mongoFeignClient.findByAddrAndType(deviceId,sensorInfo.getSensorAddr(),sensorInfo.getType());
+            returnData.setMax(Float.valueOf(sensorInfo1.getMax()));
+            returnData.setMin(Float.valueOf(sensorInfo1.getMin()));
 
             returnData.setData(list);
             res.add(returnData);
