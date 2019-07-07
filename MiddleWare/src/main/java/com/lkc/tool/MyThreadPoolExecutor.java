@@ -24,7 +24,6 @@ public class MyThreadPoolExecutor {
 
     //初始化线程池  构造函数中调用
     private void init() {
-        
         this.pool = new ThreadPoolExecutor(
                 10, 20, 600, TimeUnit.MINUTES,
                 new ArrayBlockingQueue<Runnable>(10),
