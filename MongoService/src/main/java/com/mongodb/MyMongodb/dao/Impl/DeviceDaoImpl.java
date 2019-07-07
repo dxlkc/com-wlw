@@ -39,6 +39,14 @@ public class DeviceDaoImpl implements DeviceDao {
         return mongoTemplate.find(query, Device.class);
     }
 
+    //deviceId 查找所有设备下的规则
+    public List<Rule> findAllRule(String deviceId){
+        Query query = new Query(Criteria.where("deviceId").is(deviceId));
+        Device device = mongoTemplate.findOne(query,Device.class);
+
+        return null == device ? null : device.getRules();
+    }
+
     /*********************************************更新信息部分*************************************************************/
 
     //更新板子连接状态
