@@ -63,18 +63,23 @@ public class UserController {
     public String findAllLog(@RequestParam String industryId){
         ArrayList<CustomLogger> customLoggers = influxdbDao.findAllLog(industryId+"_opslog");
 
-        JSONObject jsonObject = JSONObject.fromObject(customLoggers);
-        return jsonObject.toString();
+        JSONArray jsonArray= JSONArray.fromObject(customLoggers);
+        return jsonArray.toString();
     }
 
     //查询操作日志   按时间段查询
     @PostMapping(value = "/log/findByTime")
-    public String findLogByTime(@RequestParam String industryId, @RequestParam String starttime,
-                                @RequestParam String endtime){
-        ArrayList<CustomLogger> customLoggers = influxdbDao.findLogByTime(starttime,endtime,industryId+"_opslog");
+    public String findLogByTime(@RequestParam String industryId, @RequestParam String start,
+                                @RequestParam String end){
+        //原因：传进来的时间是 例如 2019-07-06-00:00:00
+        //需要的是 2019-07-06 00:00:00
+        start = start.substring(0,10) + " " + start.substring(11);
+        end = end.substring(0,10) + " " + end.substring(11);
 
-        JSONObject jsonObject = JSONObject.fromObject(customLoggers);
-        return jsonObject.toString();
+        ArrayList<CustomLogger> customLoggers = influxdbDao.findLogByTime(start,end,industryId+"_opslog");
+
+        JSONArray jsonArray= JSONArray.fromObject(customLoggers);
+        return jsonArray.toString();
     }
 
     //查询操作日志  按deviceId查询
@@ -82,18 +87,23 @@ public class UserController {
     public String findLogByDeviceId(@RequestParam String industryId, @RequestParam String deviceId){
         ArrayList<CustomLogger> customLoggers = influxdbDao.findLogByDeviceId(deviceId,industryId+"_opslog");
 
-        JSONObject jsonObject = JSONObject.fromObject(customLoggers);
-        return jsonObject.toString();
+        JSONArray jsonArray= JSONArray.fromObject(customLoggers);
+        return jsonArray.toString();
     }
 
     //查询操作日志  按deviceId和时间段 查询
     @PostMapping(value = "/log/findByDT")
     public String findLogByDeviceIdAndTime(@RequestParam String industryId, @RequestParam String deviceId,
-                                           @RequestParam String starttime, @RequestParam String endtime){
-        ArrayList<CustomLogger> customLoggers = influxdbDao.findLogByDeviceIdAndTime(starttime,endtime,deviceId,industryId+"_opslog");
+                                           @RequestParam String start, @RequestParam String end){
+        //原因：传进来的时间是 例如 2019-07-06-00:00:00
+        //需要的是 2019-07-06 00:00:00
+        start = start.substring(0,10) + " " + start.substring(11);
+        end = end.substring(0,10) + " " + end.substring(11);
 
-        JSONObject jsonObject = JSONObject.fromObject(customLoggers);
-        return jsonObject.toString();
+        ArrayList<CustomLogger> customLoggers = influxdbDao.findLogByDeviceIdAndTime(start,end,deviceId,industryId+"_opslog");
+
+        JSONArray jsonArray= JSONArray.fromObject(customLoggers);
+        return jsonArray.toString();
     }
 
 }
