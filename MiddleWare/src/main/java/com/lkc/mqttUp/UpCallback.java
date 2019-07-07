@@ -137,7 +137,7 @@ public class UpCallback implements MqttCallback {
                                         //状态存入 influxdb
                                         SaveData.saveData.insertToInfluxdb(MAC + "_" + code.substring(0, 2).toUpperCase() + "_" + type, tags, field);
                                         //修改mongodb relay和machine的状态
-                                        SaveData.saveData.updateRelayState(MAC, code.substring(0, 2), value);
+                                        SaveData.saveData.updateRelayState(MAC, code.substring(0, 2).toUpperCase(), value);
                                         break;
                                     } else {
                                         field.put("value", value);

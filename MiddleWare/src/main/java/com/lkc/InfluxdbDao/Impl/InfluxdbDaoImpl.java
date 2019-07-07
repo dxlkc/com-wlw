@@ -3,6 +3,7 @@ package com.lkc.InfluxdbDao.Impl;
 import com.lkc.InfluxdbDao.InfluxdbDao;
 import com.lkc.config.InfluxdbConfig;
 import com.lkc.model.Log.CustomLogger;
+import com.lkc.model.ReturnUser.HistoryData;
 import com.lkc.tool.TimeChange;
 import org.influxdb.InfluxDB;
 import org.influxdb.dto.Point;
@@ -34,7 +35,7 @@ public class InfluxdbDaoImpl implements InfluxdbDao {
     //查找历史"信息"  返回一个List ok
     public ArrayList findByTime(String starttime, String endtime, String measurement) {
         //将值全部存入list
-        ArrayList<ArrayList<String>> res = new ArrayList<>();
+        ArrayList<HistoryData> res = new ArrayList<>();
         Query query = new Query(
                 "select * from \"" + measurement + "\" where " + "time>=" + "'" + starttime + "'" + " and " + "time<=" + "'" + endtime + "'" + " tz('Asia/Shanghai')", influxdbConfig.getDbName());
 
@@ -51,10 +52,10 @@ public class InfluxdbDaoImpl implements InfluxdbDao {
                     String time = (value.get(0) == null) ? null : value.get(0).toString();
                     String values = (value.get(1) == null) ? null : value.get(1).toString();
 
-                    ArrayList<String> list = new ArrayList<>();
-                    list.add(TimeChange.dbtimeTonNormal(time));
-                    list.add(values);
-                    res.add(list);
+                    HistoryData historyData = new HistoryData();
+                    historyData.setTime(TimeChange.dbtimeTonNormal(time));
+                    historyData.setValue(values);
+                    res.add(historyData);
                 }
             }
         }

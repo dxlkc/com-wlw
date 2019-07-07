@@ -6,7 +6,7 @@ public class Machine implements Serializable {
     //用户定义的强电设备名  用户自定义
     private String machineName = "";
     //强电设备在继电器的位置 用户自定义
-    private String machinePostion;
+    private String machinePosition;
     //强电设备的状态 从板子数据获取
     private String machineState;
 
@@ -34,11 +34,11 @@ public class Machine implements Serializable {
         this.machineName = machineName;
     }
 
-    public String getMachinePostion() {
-        return machinePostion;
+    public String getMachinePosition() {
+        return machinePosition;
     }
 
-    public void setMachinePostion(String machinePostion) {
-        this.machinePostion = machinePostion;
+    public void setMachinePosition(String machinePosition) {
+        this.machinePosition = machinePosition;
     }
 }

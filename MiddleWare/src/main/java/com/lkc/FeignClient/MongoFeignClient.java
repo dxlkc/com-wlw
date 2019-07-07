@@ -48,4 +48,7 @@ public interface MongoFeignClient {
     @PostMapping(value = "/sensor/find/All")
     List<SensorInfo> findAll(@RequestParam String deviceId);
 
+    @PostMapping(value = "/sensor/confirm/addr")
+    SensorInfo findByAddrAndType(@RequestParam String deviceId, @RequestParam String sensorAddr,
+                                  @RequestParam String type);
 }

@@ -11,8 +11,6 @@ public interface InfluxdbDao {
 
     ArrayList findByTime(String starttime, String endtime, String measurement);
 
-    ArrayList findNewest(String measurement);
-
     String deleteMeasurement(String measurement);
 
     /*******************************************************/
