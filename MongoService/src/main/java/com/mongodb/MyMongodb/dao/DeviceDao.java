@@ -14,8 +14,6 @@ public interface DeviceDao {
 
     List<Device> findAll(String industryId, String unitId);
 
-    List<Rule> findAllRule(String deviceId);
-
     /****************更新********************/
 
     long updateLinkState(String deviceId, String linkState);
