@@ -32,6 +32,11 @@ public class DeviceController {
         return deviceDao.findAll(industryId, unitId);
     }
 
+    @PostMapping(value = "/findRule")
+    public List<Rule> findAllRule(@RequestParam String deviceId){
+        return deviceDao.findAllRule(deviceId);
+    }
+
     /****************更新********************/
 
     @PostMapping(value = "/update/linkstate")
