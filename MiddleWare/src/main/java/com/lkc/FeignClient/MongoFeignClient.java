@@ -1,6 +1,7 @@
 package com.lkc.FeignClient;
 
 import com.lkc.model.Industry.deviceInfo.Device;
+import com.lkc.model.Industry.sensorInfo.SensorInfo;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -42,4 +43,9 @@ public interface MongoFeignClient {
     @PostMapping(value = "/relay/update/state")
     long updatePinsState(@RequestParam String deviceId, @RequestParam String relayAddr,
                          @RequestParam String newPinsState);
+
+    //查找设备的所有能测的值
+    @PostMapping(value = "/sensor/find/All")
+    List<SensorInfo> findAll(@RequestParam String deviceId);
+
 }

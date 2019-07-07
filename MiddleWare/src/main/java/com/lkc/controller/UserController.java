@@ -4,8 +4,8 @@ import com.lkc.InfluxdbDao.InfluxdbDao;
 import com.lkc.model.Log.CustomLogger;
 import com.lkc.model.ReturnUser.ReturnData;
 import com.lkc.mqttUp.UpMqtt;
+import com.lkc.service.HistoryService;
 import com.lkc.service.LogService;
-import com.lkc.tool.TimeChange;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import org.springframework.web.bind.annotation.*;
@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 @RestController
 public class UserController {
@@ -21,31 +20,21 @@ public class UserController {
     private InfluxdbDao influxdbDao;
     @Resource
     private LogService logService;
+    @Resource
+    private HistoryService historyService;
 
     //查询历史数据
     @PostMapping(value = "/history")
     public String findHistory(@RequestParam String start, @RequestParam String end,
-                              @RequestParam String deviceId, @RequestParam String types) {
-        //键 为 温湿度等类型
-        //值 为 类型对应站号
-        List<ReturnData> res = new ArrayList<>();
+                              @RequestParam String deviceId) {
+        //原因：传进来的时间是 例如 2019-07-06-00:00:00
+        //需要的是 2019-07-06 00:00:00
+        start = start.substring(0,10) + " " + start.substring(11);
+        end = end.substring(0,10) + " " + end.substring(11);
 
-        Map<String, String> type = JSONObject.fromObject(types);
+        List<ReturnData> list = historyService.findHistory(start, end, deviceId);
+        JSONArray jsonArray = JSONArray.fromObject(list);
 
-        for (Map.Entry<String, String> entry : type.entrySet()) {
-            ReturnData returnData = new ReturnData();
-            returnData.setDeviceId(deviceId);
-            returnData.setType(entry.getKey());
-
-            String measurement = deviceId+"_"+entry.getValue()+"_"+entry.getKey();
-            ArrayList<ArrayList<String>> list =
-                    influxdbDao.findByTime(TimeChange.secondToTime(start), TimeChange.secondToTime(end), measurement);
-
-            returnData.setData(list);
-            res.add(returnData);
-        }
-
-        JSONArray jsonArray = JSONArray.fromObject(res);
         return jsonArray.toString();
     }
 
