@@ -18,6 +18,9 @@ public class MqttConfig {
     @Value("${mqtt.port}")
     private Integer port;
 
+
+
+    
     public String getHost() {
         logger.info("mqtt proxy : tcp://" + ip + ":" + port);
         return "tcp://" + ip + ":" + port;
