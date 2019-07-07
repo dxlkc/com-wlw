@@ -122,7 +122,7 @@ public class InfluxdbDaoImpl implements InfluxdbDao {
                     String result = (value.get(4) == null) ? null : value.get(4).toString();
 
                     CustomLogger customLogger = new CustomLogger();
-                    customLogger.setTime(time);
+                    customLogger.setTime(TimeChange.dbtimeTonNormal(time));
                     customLogger.setType(type);
                     customLogger.setDeviceId(deviceId);
                     customLogger.setMessage(message);
@@ -159,7 +159,7 @@ public class InfluxdbDaoImpl implements InfluxdbDao {
                     String result = (value.get(4) == null) ? null : value.get(4).toString();
 
                     CustomLogger customLogger = new CustomLogger();
-                    customLogger.setTime(time);
+                    customLogger.setTime(TimeChange.dbtimeTonNormal(time));
                     customLogger.setType(type);
                     customLogger.setDeviceId(deviceId);
                     customLogger.setMessage(message);
@@ -196,7 +196,7 @@ public class InfluxdbDaoImpl implements InfluxdbDao {
                     String result = (value.get(4) == null) ? null : value.get(4).toString();
 
                     CustomLogger customLogger = new CustomLogger();
-                    customLogger.setTime(time);
+                    customLogger.setTime(TimeChange.dbtimeTonNormal(time));
                     customLogger.setType(type);
                     customLogger.setDeviceId(deviceId);
                     customLogger.setMessage(message);
@@ -233,7 +233,7 @@ public class InfluxdbDaoImpl implements InfluxdbDao {
                     String result = (value.get(4) == null) ? null : value.get(4).toString();
 
                     CustomLogger customLogger = new CustomLogger();
-                    customLogger.setTime(time);
+                    customLogger.setTime(TimeChange.dbtimeTonNormal(time));
                     customLogger.setType(type);
                     customLogger.setDeviceId(deviceId);
                     customLogger.setMessage(message);
