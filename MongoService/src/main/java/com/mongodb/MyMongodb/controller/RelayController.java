@@ -58,9 +58,8 @@ public class RelayController {
 
     @PostMapping(value = "/update/machine")
     public long updateMachineInfo(@RequestParam String deviceId, @RequestParam String relayAddr,
-                                  @RequestParam String machinePosition, @RequestParam String newName,
-                                  @RequestParam String newPosition) {
-        return relayDao.updateMachineInfo(deviceId, relayAddr, machinePosition, newName, newPosition);
+                                  @RequestParam String machinePosition, @RequestParam String newName) {
+        return relayDao.updateMachineInfo(deviceId, relayAddr, machinePosition, newName);
     }
 
     @PostMapping(value = "/update/machineState")

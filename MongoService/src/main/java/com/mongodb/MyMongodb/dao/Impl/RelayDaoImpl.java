@@ -123,17 +123,16 @@ public class RelayDaoImpl implements RelayDao {
 
     //更新 machine 信息 ok
     public long updateMachineInfo(@NotNull String deviceId, @NotNull String relayAddr,
-                                  @NotNull String machinePosition, String newName, String newPosition) {
+                                  @NotNull String machinePosition, String newName) {
         Relay relay = find(deviceId, relayAddr);
         int machineIndex = relay.getMachineIndexByPosition(machinePosition);
 
         Query query = new Query(Criteria.where("deviceId").is(deviceId)
-                .and("deviceId").is(deviceId)
-                .and("relayAddr").is(relayAddr));
+                .and("relayAddr").is(relayAddr)
+                .and("machinePosition").is(machinePosition));
         Update update = new Update();
 
         update.set("machineList." + machineIndex + "machineName", newName);
-        update.set("machineList." + machineIndex + "machinePosition", newPosition);
 
         UpdateResult result = mongoTemplate.updateMulti(query, update, Relay.class);
         return result.getModifiedCount();
