@@ -14,11 +14,14 @@ import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.Resource;
+import javax.crypto.Mac;
 import java.util.List;
+import java.util.Map;
 
 @Component
 public class RelayDaoImpl implements RelayDao {
-    @Autowired
+    @Resource
     private MongoTemplate mongoTemplate;
 
     //查找 ok
@@ -32,6 +35,19 @@ public class RelayDaoImpl implements RelayDao {
     public List<Relay> findAll(String deviceId) {
         Query query = new Query(Criteria.where("deviceId").is(deviceId));
         return mongoTemplate.find(query, Relay.class);
+    }
+
+    //查找指定强电设备
+    public Machine findMachineByPosition(String deviceId, String relayAddr, String machinePosition) {
+        Query query = new Query(Criteria.where("deviceId").is(deviceId)
+                .and("relayAddr").is(relayAddr));
+        Relay relay = mongoTemplate.findOne(query,Relay.class);
+        if (null != relay){
+            List<Machine> machines = relay.getMachineList();
+            int index = relay.getMachineIndexByPosition(machinePosition);
+            return machines.get(index);
+        }
+        return null;
     }
 
     /***********添加********************/
@@ -62,7 +78,7 @@ public class RelayDaoImpl implements RelayDao {
     }
 
     //删除acqUnit 下的所有 relay
-    public long deleteAllByIndustryIdAndUnitId(String industryId, String unitId){
+    public long deleteAllByIndustryIdAndUnitId(String industryId, String unitId) {
         Query query = new Query(Criteria.where("industryId").is(industryId).and("unitId").is(unitId));
         DeleteResult result = mongoTemplate.remove(query, Relay.class);
         return result.getDeletedCount();

@@ -14,9 +14,11 @@ import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.Resource;
+
 @Component
 public class IndustryDaoImpl implements IndustryDao{
-    @Autowired
+    @Resource
     private MongoTemplate mongoTemplate;
 
     //通过 industry id 查找项目

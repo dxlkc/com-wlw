@@ -11,6 +11,8 @@ public interface RelayDao {
 
     List<Relay> findAll(String deviceId);
 
+    Machine findMachineByPosition(String deviceId, String relayAddr, String machinePosition);
+
     /****************添加********************/
 
     Relay addRelay(Relay relay);
