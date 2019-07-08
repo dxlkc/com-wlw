@@ -41,11 +41,18 @@ public class RelayDaoImpl implements RelayDao {
     public Machine findMachineByPosition(String deviceId, String relayAddr, String machinePosition) {
         Query query = new Query(Criteria.where("deviceId").is(deviceId)
                 .and("relayAddr").is(relayAddr));
-        Relay relay = mongoTemplate.findOne(query,Relay.class);
-        if (null != relay){
+        Relay relay = mongoTemplate.findOne(query, Relay.class);
+
+        if (null != relay) {
             List<Machine> machines = relay.getMachineList();
-            int index = relay.getMachineIndexByPosition(machinePosition);
-            return machines.get(index);
+
+            if (null != machines && machines.size() > 0) {
+                int index = relay.getMachineIndexByPosition(machinePosition);
+
+                if (index >= 0) {
+                    return machines.get(index);
+                }
+            }
         }
         return null;
     }
