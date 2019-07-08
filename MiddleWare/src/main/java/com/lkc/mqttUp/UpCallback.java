@@ -166,7 +166,11 @@ public class UpCallback implements MqttCallback {
                         SaveData.saveData.updateSendRate(MAC, sendRate);
                     }
                     // 调用user service 进行 预警处理
-                    SaveData.saveData.thresholdHandler(MAC, threshold, Time);
+                    try{
+                        SaveData.saveData.thresholdHandler(MAC, threshold, Time);
+                    } catch (ClientException e){
+                        logger.warn("向 user-service 请求预警处理失败...");
+                    }
 
                 } //end if
             } //end run
@@ -175,7 +179,7 @@ public class UpCallback implements MqttCallback {
 
     //这个类用于保存数据
     @Component
-    public static class SaveData {
+    public static class SaveData{
         @Resource
         private InfluxdbDao influxdbDao;
         //注入FeignClient
@@ -214,7 +218,7 @@ public class UpCallback implements MqttCallback {
             saveData.mongoFeignClient.updatePinsState(deviceId, relayAddr, state);
         }
 
-        void thresholdHandler(String deviceId, Map<String, String> map, String time) {
+        void thresholdHandler(String deviceId, Map<String, String> map, String time) throws ClientException{
             saveData.userFeignClient.thresholdHandler(deviceId, map, time);
         }
     }

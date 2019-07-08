@@ -42,13 +42,13 @@ public class DownHandler {
         try {
             condition.await(5, TimeUnit.SECONDS);
         } catch (InterruptedException e) {
+            mqtt.disconnet();
             logger.warn("condition await 发生异常");
             return "接收数据发生异常";
         }
         mqtt.disconnet();
 
         lock.unlock();
-
         //从map中取出数据
         SingleMap singleMap = SingleMap.getInstance();
         String res = singleMap.get(uid);
