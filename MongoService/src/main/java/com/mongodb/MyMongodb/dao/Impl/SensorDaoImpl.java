@@ -12,11 +12,12 @@ import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.Resource;
 import java.util.List;
 
 @Component
 public class SensorDaoImpl implements SensorDao {
-    @Autowired
+    @Resource
     private MongoTemplate mongoTemplate;
 
     //查找 通过 ok

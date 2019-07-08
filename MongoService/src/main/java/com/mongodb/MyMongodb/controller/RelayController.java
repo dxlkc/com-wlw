@@ -28,6 +28,13 @@ public class RelayController {
         return relayDao.findAll(deviceId);
     }
 
+    //查找指定强电设备
+    @PostMapping(value = "/findMachine")
+    public Machine findMachineByPosition(@RequestParam String deviceId, @RequestParam String relayAddr,
+                                         @RequestParam String machinePosition) {
+        return relayDao.findMachineByPosition(deviceId, relayAddr, machinePosition);
+    }
+
     /****************添加********************/
 
     @PostMapping(value = "/add/relay")

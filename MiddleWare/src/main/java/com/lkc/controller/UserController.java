@@ -7,7 +7,6 @@ import com.lkc.mqttUp.UpMqtt;
 import com.lkc.service.HistoryService;
 import com.lkc.service.LogService;
 import net.sf.json.JSONArray;
-import net.sf.json.JSONObject;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;

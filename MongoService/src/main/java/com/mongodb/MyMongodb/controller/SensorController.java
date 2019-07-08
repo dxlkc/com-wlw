@@ -5,12 +5,13 @@ import com.mongodb.MyMongodb.model.sensorInfo.SensorInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.Resource;
 import java.util.List;
 
 @RestController
 @RequestMapping(value = "/sensor")
 public class SensorController {
-    @Autowired
+    @Resource
     private SensorDao sensorDao;
 
     @PostMapping(value = "/find")

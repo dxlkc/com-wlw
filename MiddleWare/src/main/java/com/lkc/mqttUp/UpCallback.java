@@ -4,6 +4,7 @@ import com.lkc.FeignClient.UserFeignClient;
 import com.lkc.InfluxdbDao.InfluxdbDao;
 import com.lkc.FeignClient.MongoFeignClient;
 import com.lkc.tool.MyThreadPoolExecutor;
+import com.netflix.client.ClientException;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken;
@@ -94,7 +95,7 @@ public class UpCallback implements MqttCallback {
                     Sensors = jsonObject.getJSONArray("Sensors");
                 }
 
-                if (Sensors.size() > 0) {
+                if (null != Sensors && Sensors.size() > 0) {
 
                     for (int i = 0; i < Sensors.size(); ++i) {
                         JSONObject object = Sensors.getJSONObject(i);
@@ -142,7 +143,7 @@ public class UpCallback implements MqttCallback {
                                     } else {
                                         field.put("value", value);
                                         //存入 预警处理专用的 Map中
-                                        threshold.put(type,value);
+                                        threshold.put(type, value);
                                     }
 
                                     //环境数据存influxdb
@@ -166,6 +167,7 @@ public class UpCallback implements MqttCallback {
                     }
                     // 调用user service 进行 预警处理
                     SaveData.saveData.thresholdHandler(MAC, threshold, Time);
+
                 } //end if
             } //end run
         });
@@ -192,27 +194,27 @@ public class UpCallback implements MqttCallback {
             saveData.userFeignClient = this.userFeignClient;
         }
 
-        public void insertToInfluxdb(String measurement, Map<String, String> tags, Map<String, Object> fields) {
+        void insertToInfluxdb(String measurement, Map<String, String> tags, Map<String, Object> fields) {
             saveData.influxdbDao.insert(measurement, tags, fields);
         }
 
-        public void updataLocation(String deviceId, String longitude, String latitude, String locationDetail) {
+        void updataLocation(String deviceId, String longitude, String latitude, String locationDetail) {
             saveData.mongoFeignClient.updateDeviceLocation(deviceId, longitude, latitude, locationDetail);
         }
 
-        public void updateSendRate(String deviceId, String sendRate) {
+        void updateSendRate(String deviceId, String sendRate) {
             saveData.mongoFeignClient.updateDeviceSendRate(deviceId, sendRate);
         }
 
-        public void updateSensorValue(String deviceId, String sensorAddr, String type, String value, String time) {
+        void updateSensorValue(String deviceId, String sensorAddr, String type, String value, String time) {
             saveData.mongoFeignClient.updateSensorValue(deviceId, sensorAddr, type, value, time);
         }
 
-        public void updateRelayState(String deviceId, String relayAddr, String state){
+        void updateRelayState(String deviceId, String relayAddr, String state) {
             saveData.mongoFeignClient.updatePinsState(deviceId, relayAddr, state);
         }
 
-        public void thresholdHandler(String deviceId, Map<String, String> map, String time){
+        void thresholdHandler(String deviceId, Map<String, String> map, String time) {
             saveData.userFeignClient.thresholdHandler(deviceId, map, time);
         }
     }

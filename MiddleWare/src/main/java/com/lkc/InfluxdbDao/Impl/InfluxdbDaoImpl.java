@@ -53,7 +53,7 @@ public class InfluxdbDaoImpl implements InfluxdbDao {
                     String values = (value.get(1) == null) ? null : value.get(1).toString();
 
                     HistoryData historyData = new HistoryData();
-                    historyData.setTime(TimeChange.dbtimeTonNormal(time));
+                    historyData.setTime(TimeChange.dbtimeTonNormal(time));  //influxdb  time不可能为null
                     historyData.setValue(values);
                     res.add(historyData);
                 }
@@ -81,7 +81,7 @@ public class InfluxdbDaoImpl implements InfluxdbDao {
                     String time = (value.get(0) == null) ? null : value.get(0).toString();
                     String values = (value.get(1) == null) ? null : value.get(1).toString();
                     ArrayList<String> list = new ArrayList<>();
-                    list.add(TimeChange.dbtimeTonNormal(time));
+                    list.add(TimeChange.dbtimeTonNormal(time)); //influxdb  time不可能为null
                     list.add(values);
                     res.add(list);
                 }
@@ -122,7 +122,7 @@ public class InfluxdbDaoImpl implements InfluxdbDao {
                     String result = (value.get(4) == null) ? null : value.get(4).toString();
 
                     CustomLogger customLogger = new CustomLogger();
-                    customLogger.setTime(TimeChange.dbtimeTonNormal(time));
+                    customLogger.setTime(TimeChange.dbtimeTonNormal(time)); //influxdb  time不可能为null
                     customLogger.setType(type);
                     customLogger.setDeviceId(deviceId);
                     customLogger.setMessage(message);
@@ -159,7 +159,7 @@ public class InfluxdbDaoImpl implements InfluxdbDao {
                     String result = (value.get(4) == null) ? null : value.get(4).toString();
 
                     CustomLogger customLogger = new CustomLogger();
-                    customLogger.setTime(TimeChange.dbtimeTonNormal(time));
+                    customLogger.setTime(TimeChange.dbtimeTonNormal(time));  //influxdb  time不可能为null
                     customLogger.setType(type);
                     customLogger.setDeviceId(deviceId);
                     customLogger.setMessage(message);
@@ -196,7 +196,7 @@ public class InfluxdbDaoImpl implements InfluxdbDao {
                     String result = (value.get(4) == null) ? null : value.get(4).toString();
 
                     CustomLogger customLogger = new CustomLogger();
-                    customLogger.setTime(TimeChange.dbtimeTonNormal(time));
+                    customLogger.setTime(TimeChange.dbtimeTonNormal(time)); //influxdb  time不可能为null
                     customLogger.setType(type);
                     customLogger.setDeviceId(deviceId);
                     customLogger.setMessage(message);
@@ -233,7 +233,7 @@ public class InfluxdbDaoImpl implements InfluxdbDao {
                     String result = (value.get(4) == null) ? null : value.get(4).toString();
 
                     CustomLogger customLogger = new CustomLogger();
-                    customLogger.setTime(TimeChange.dbtimeTonNormal(time));
+                    customLogger.setTime(TimeChange.dbtimeTonNormal(time)); //influxdb  time不可能为null
                     customLogger.setType(type);
                     customLogger.setDeviceId(deviceId);
                     customLogger.setMessage(message);
