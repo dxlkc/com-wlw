@@ -35,7 +35,6 @@ public class HeartBeat {
                         Set<String> stringSet = new HashSet<>();
                         List<Device> deviceList = mongoFeignClient.findAllDevice();
 
-
                         for (Device device : deviceList) {
                             if (stringSet.contains(device.getDeviceId())) {
                                 continue;
@@ -76,9 +75,9 @@ public class HeartBeat {
                             logger.warn("sleep定时异常 : " + e.getMessage());
                             start();
                         }
-
                     }
                 } catch (Exception e) {
+                    logger.warn("重新启动心跳循环");
                     start();
                 }
             }

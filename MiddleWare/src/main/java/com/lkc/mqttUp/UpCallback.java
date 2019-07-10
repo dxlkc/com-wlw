@@ -136,9 +136,9 @@ public class UpCallback implements MqttCallback {
                                     if (type.equals("relayState")) {
                                         field.put("value", Integer.toBinaryString(Integer.valueOf(value)));
                                         //状态存入 influxdb
-                                        SaveData.saveData.insertToInfluxdb(MAC + "_" + code.substring(0, 2).toUpperCase() + "_" + type, tags, field);
+                                        SaveData.saveData.insertToInfluxdb(MAC + "_" + addr + "_" + type, tags, field);
                                         //修改mongodb relay和machine的状态
-                                        SaveData.saveData.updateRelayState(MAC, code.substring(0, 2).toUpperCase(), value);
+                                        SaveData.saveData.updateRelayState(MAC, addr, value);
                                         break;
                                     } else {
                                         field.put("value", value);
@@ -147,7 +147,7 @@ public class UpCallback implements MqttCallback {
                                     }
 
                                     //环境数据存influxdb
-                                    SaveData.saveData.insertToInfluxdb(MAC + "_" + code.substring(0, 2) + "_" + type, tags, field);
+                                    SaveData.saveData.insertToInfluxdb(MAC + "_" + addr + "_" + type, tags, field);
                                     // 调用mongodb 存传感器最新值
                                     SaveData.saveData.updateSensorValue(MAC, addr, type, value, Time);
                             } //end switch
@@ -166,9 +166,9 @@ public class UpCallback implements MqttCallback {
                         SaveData.saveData.updateSendRate(MAC, sendRate);
                     }
                     // 调用user service 进行 预警处理
-                    try{
+                    try {
                         SaveData.saveData.thresholdHandler(MAC, threshold, Time);
-                    } catch (ClientException e){
+                    } catch (ClientException e) {
                         logger.warn("向 user-service 请求预警处理失败...");
                     }
 
@@ -179,7 +179,7 @@ public class UpCallback implements MqttCallback {
 
     //这个类用于保存数据
     @Component
-    public static class SaveData{
+    public static class SaveData {
         @Resource
         private InfluxdbDao influxdbDao;
         //注入FeignClient
@@ -218,7 +218,7 @@ public class UpCallback implements MqttCallback {
             saveData.mongoFeignClient.updatePinsState(deviceId, relayAddr, state);
         }
 
-        void thresholdHandler(String deviceId, Map<String, String> map, String time) throws ClientException{
+        void thresholdHandler(String deviceId, Map<String, String> map, String time) throws ClientException {
             saveData.userFeignClient.thresholdHandler(deviceId, map, time);
         }
     }

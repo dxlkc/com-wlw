@@ -71,7 +71,7 @@ public class DeviceController {
 
     @PostMapping(value = "/delete/device")
     public long deleteByDeviceId(@RequestParam String industryId, @RequestParam String deviceId) {
-        return industryService.deleteDevice(industryId, deviceId);
+        return deviceDao.deleteByDeviceId(industryId, deviceId);
     }
 
     /****************添加********************/
@@ -95,6 +95,12 @@ public class DeviceController {
     @PostMapping("/add/rule")
     public long addRule(@RequestParam String deviceId, @RequestBody Rule rule){
         return deviceDao.addRule(deviceId, rule);
+    }
+
+    @PostMapping("/update/switchState")
+    public long updateSwitchState(@RequestParam String deviceId, @RequestParam String ruleId,
+                                  @RequestParam String switchState){
+        return deviceDao.updateRuleSwitch(deviceId, ruleId, switchState);
     }
 
     @PostMapping("/delete/rule")

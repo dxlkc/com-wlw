@@ -117,7 +117,7 @@ public class DeviceDaoImpl implements DeviceDao {
         return result.getDeletedCount();
     }
 
-    //删除某个acqUnit下的 Device ok
+    //删除某个acqUnit下的 Device
     public long deleteByDeviceId(String industryId, String deviceId) {
         Query query = new Query(Criteria.where("industryId").is(industryId).and("deviceId").is(deviceId));
         DeleteResult result = mongoTemplate.remove(query, Device.class);
@@ -153,11 +153,23 @@ public class DeviceDaoImpl implements DeviceDao {
         return result.getModifiedCount();
     }
 
+    //开启/关闭 规则
+    public long updateRuleSwitch(String deviceId, String ruleId, String switchState){
+        Device device = findByDeviceId(deviceId);
+        int index = device.getRuleInduxByRuleId(ruleId);
+
+        Query query = new Query(Criteria.where("deviceId").is(deviceId));
+        Update update = new Update();
+        update.set("rules." + index + ".switchState",switchState);
+        UpdateResult result = mongoTemplate.updateMulti(query,update,Device.class);
+        return  result.getModifiedCount();
+    }
+
     //删除一条规则
     public long deleteRule(String deviceId, String ruleId){
         Query query = new Query(Criteria.where("deviceId").is(deviceId));
         Update update = new Update();
-        update.pull("rules", new BasicDBObject("id", ruleId));
+        update.pull("rules", new BasicDBObject("ruleId", ruleId));
         UpdateResult result = mongoTemplate.updateFirst(query, update, Device.class);
         return result.getModifiedCount();
     }

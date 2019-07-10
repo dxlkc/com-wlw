@@ -35,9 +35,9 @@ public class SensorInfo implements Serializable {
     //value的更新时间 从板子获取数据
     private String time;
     //最大阈值 用户自定义
-    private String max;
+    private String max="";
     //最小阈值 用户自定义
-    private String min;
+    private String min="";
 
     public String getTime() {
         return time;

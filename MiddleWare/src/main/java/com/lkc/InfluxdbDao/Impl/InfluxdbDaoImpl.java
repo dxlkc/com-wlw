@@ -214,7 +214,7 @@ public class InfluxdbDaoImpl implements InfluxdbDao {
         //将值全部存入list
         ArrayList<CustomLogger> res = new ArrayList<>();
         Query query = new Query(
-                "select * from \"" + measurement + "\" where " + "deviceId=" + "'" + DeviceId + "'" + " and " + "time>=" + "'" + starttime + "'" + " and " + "time<=" + "'" + endtime + "'" + " tz('Asia/Shanghai')", influxdbConfig.getDbName());
+                "select * from \"" + measurement + "\" where " + "deviceId=" + "'" + DeviceId + "'" + " and " + "time>=" + "'" + starttime + "'" + " and " + "time<=" + "'" + endtime + "'" + " order by time desc" + " tz('Asia/Shanghai')", influxdbConfig.getDbName());
 
         //以下需要封装（传一个Query 返回一个list）
         QueryResult queryResult = influxdb.query(query);
@@ -227,10 +227,10 @@ public class InfluxdbDaoImpl implements InfluxdbDao {
                 for (List<Object> value : valueList) {
                     //取字段值
                     String time = (value.get(0) == null) ? null : value.get(0).toString();
-                    String type = (value.get(1) == null) ? null : value.get(1).toString();
-                    String deviceId = (value.get(2) == null) ? null : value.get(2).toString();
-                    String message = (value.get(3) == null) ? null : value.get(3).toString();
-                    String result = (value.get(4) == null) ? null : value.get(4).toString();
+                    String deviceId = (value.get(1) == null) ? null : value.get(1).toString();
+                    String message = (value.get(2) == null) ? null : value.get(2).toString();
+                    String result = (value.get(3) == null) ? null : value.get(3).toString();
+                    String type = (value.get(4) == null) ? null : value.get(4).toString();
 
                     CustomLogger customLogger = new CustomLogger();
                     customLogger.setTime(TimeChange.dbtimeTonNormal(time)); //influxdb  time不可能为null

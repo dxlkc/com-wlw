@@ -47,6 +47,10 @@ public interface DeviceDao {
 
     long addRule(String deviceId, Rule rule);
 
+    /****************开启/关闭 一条规则***********/
+
+    long updateRuleSwitch(String deviceId, String ruleId, String switchState);
+
     /****************删除一条规则***********/
 
     long deleteRule(String deviceId, String ruleId);

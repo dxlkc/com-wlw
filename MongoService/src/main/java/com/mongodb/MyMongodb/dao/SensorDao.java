@@ -30,8 +30,6 @@ public interface SensorDao {
 
     long deleteAllByIndustryId(String industryId);
 
-    long deleteAllByIndustryIdAndUnitId(String industryId, String unitId);
-
     long deleteAllByDeviceId(String deviceId);
 
     long delete(String deviceId, String sensorAddr);

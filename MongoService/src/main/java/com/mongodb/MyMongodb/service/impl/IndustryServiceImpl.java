@@ -4,6 +4,7 @@ import com.mongodb.MyMongodb.dao.DeviceDao;
 import com.mongodb.MyMongodb.dao.IndustryDao;
 import com.mongodb.MyMongodb.dao.RelayDao;
 import com.mongodb.MyMongodb.dao.SensorDao;
+import com.mongodb.MyMongodb.model.deviceInfo.Device;
 import com.mongodb.MyMongodb.model.relayInfo.Machine;
 import com.mongodb.MyMongodb.model.relayInfo.Relay;
 import com.mongodb.MyMongodb.service.IndustryService;
@@ -23,29 +24,6 @@ public class IndustryServiceImpl implements IndustryService {
     @Resource
     private SensorDao sensorDao;
 
-    //删除整个产业
-    public long deleteIndustry(String industryId) {
-        return industryDao.deleteByIndustryId(industryId) &
-                deviceDao.deleteAllByIndustryId(industryId) &
-                relayDao.deleteAllByIndustryId(industryId) &
-                sensorDao.deleteAllByIndustryId(industryId);
-    }
-
-    //删除整个采集单元
-    public long deleteUnit(String industryId, String unitId) {
-        return industryDao.deleteByAcqUnitId(industryId, unitId) &
-                deviceDao.deleteAllByIndustryIdAndUnitId(industryId, unitId) &
-                relayDao.deleteAllByIndustryIdAndUnitId(industryId, unitId) &
-                sensorDao.deleteAllByIndustryIdAndUnitId(industryId, unitId);
-    }
-
-    //删除整个设备
-    public long deleteDevice(String industryId, String deviceId) {
-        return deviceDao.deleteByDeviceId(industryId, deviceId) &
-                relayDao.deleteAllByDeviceId(deviceId) &
-                sensorDao.deleteAllByDeviceId(deviceId);
-    }
-
     //修改继电器状态 （同时修改继电器下设备的状态）
     public long updateRelayPinsState(String deviceId, String relayAddr, String newPinsState) {
         int pinsState = Integer.valueOf(newPinsState);
@@ -61,7 +39,13 @@ public class IndustryServiceImpl implements IndustryService {
             relayDao.updateMachineState(deviceId, relayAddr, machine.getMachinePosition(), String.valueOf(state));
         }
 
-        return relayDao.updatePinsState(deviceId, relayAddr, newPinsState);
+        //状态转换成 "10000011" 右边开始1-8路状态 1为开 0为关
+        StringBuilder allState = new StringBuilder();
+        for(int i = 7; i >= 0; i--){
+            allState.append(0x1 & pinsState >> i);
+        }
+
+        return relayDao.updatePinsState(deviceId, relayAddr, allState.toString());
     }
 
 }
