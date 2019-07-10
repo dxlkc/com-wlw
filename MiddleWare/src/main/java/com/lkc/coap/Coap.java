@@ -17,6 +17,10 @@ public class Coap {
     public <T> String send(String URI, T object) {
         CoapResponse response = null;
 
+        if (null == URI || "".equals(URI)){
+            URI = "192.168.100.122/shell";
+        }
+
         try {
 
             URI uri = new URI(URI);
