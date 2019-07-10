@@ -1,11 +1,16 @@
 package com.lkc.coap;
 
+import com.lkc.config.CoapConfig;
+import com.lkc.config.MqttConfig;
 import net.sf.json.JSONObject;
 import org.eclipse.californium.core.CoapClient;
 import org.eclipse.californium.core.CoapResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
+import javax.annotation.PostConstruct;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.Base64;
@@ -18,7 +23,7 @@ public class Coap {
         CoapResponse response = null;
 
         if (null == URI || "".equals(URI)){
-            URI = "192.168.100.122/shell";
+            URI = Config.getServerIp() + "/shell";
         }
 
         try {
@@ -44,5 +49,24 @@ public class Coap {
 
         Base64.Decoder decoder = Base64.getDecoder();
         return new String(decoder.decode(response.getResponseText()));
+    }
+
+    @Component
+    private static class Config {
+        @Autowired
+        private CoapConfig coapConfig;
+
+        private static Config config;
+
+        @PostConstruct
+        public void init() {
+            config = this;
+            config.coapConfig = this.coapConfig;
+        }
+
+        public static String getServerIp() {
+            return config.coapConfig.getServerIp();
+        }
+
     }
 }
