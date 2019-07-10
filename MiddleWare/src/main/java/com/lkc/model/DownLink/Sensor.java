@@ -5,6 +5,8 @@ import java.util.List;
 
 //用户添加的传感器的所有信息
 public class Sensor {
+    //产业id
+    private String industryId;
     //传感器名  前端需求
     private String sensorName;
     //设备id   前端需求
@@ -23,6 +25,14 @@ public class Sensor {
     private List<Type> types = new ArrayList<>();
     //板子需要发布的主题
     private String topic;
+
+    public String getIndustryId() {
+        return industryId;
+    }
+
+    public void setIndustryId(String industryId) {
+        this.industryId = industryId;
+    }
 
     public String getSensorName() {
         return sensorName;

@@ -1,5 +1,6 @@
 package com.lkc.start;
 
+import com.lkc.coap.Coap;
 import com.lkc.heartbeat.HeartBeat;
 import com.lkc.mqttUp.UpMqtt;
 import org.springframework.boot.CommandLineRunner;

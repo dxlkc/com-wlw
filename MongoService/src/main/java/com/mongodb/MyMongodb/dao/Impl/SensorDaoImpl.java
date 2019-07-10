@@ -62,13 +62,6 @@ public class SensorDaoImpl implements SensorDao {
         return result.getDeletedCount();
     }
 
-    //删除acqUnit 下的所有 sensor
-    public long deleteAllByIndustryIdAndUnitId(String industryId, String unitId){
-        Query query = new Query(Criteria.where("industryId").is(industryId).and("unitId").is(unitId));
-        DeleteResult result = mongoTemplate.remove(query, SensorInfo.class);
-        return result.getDeletedCount();
-    }
-
     //删除device 下的所有 sensor
     public long deleteAllByDeviceId(String deviceId){
         Query query = new Query(Criteria.where("deviceId").is(deviceId));

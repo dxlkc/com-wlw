@@ -45,12 +45,12 @@ public class IndustryController {
 
     @PostMapping(value = "/delete/industry")
     public long deleteByIndustryId(@RequestParam String id) {
-        return industryService.deleteIndustry(id);
+        return industryDao.deleteByIndustryId(id);
     }
 
     @PostMapping(value = "/delete/unit")
     public long deleteByAcqUnitId(@RequestParam String industryId, @RequestParam String unitId) {
-        return industryService.deleteUnit(industryId, unitId);
+        return industryDao.deleteByAcqUnitId(industryId, unitId);
     }
 
     /************添加**********/

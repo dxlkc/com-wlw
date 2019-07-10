@@ -24,7 +24,6 @@ public class HistoryServiceImpl implements HistoryService {
         List<SensorInfo> sensorInfos = mongoFeignClient.findAll(deviceId);
 
         for (SensorInfo sensorInfo : sensorInfos) {
-
             ReturnData returnData = new ReturnData();
             returnData.setDeviceId(deviceId);
             returnData.setType(sensorInfo.getType());
@@ -33,12 +32,20 @@ public class HistoryServiceImpl implements HistoryService {
             ArrayList<HistoryData> list =
                     influxdbDao.findByTime(start, end, measurement);
 
-            SensorInfo sensorInfo1 = mongoFeignClient.findByAddrAndType(deviceId,sensorInfo.getSensorAddr(),sensorInfo.getType());
-            returnData.setMax(Float.valueOf(sensorInfo1.getMax()));
-            returnData.setMin(Float.valueOf(sensorInfo1.getMin()));
+            if (0 == list.size()){
+                continue;
+            }
 
-            returnData.setData(list);
-            res.add(returnData);
+            SensorInfo sensorInfo1 = mongoFeignClient.findByAddrAndType(deviceId, sensorInfo.getSensorAddr(), sensorInfo.getType());
+            if (null != sensorInfo1) {
+                if (!"".equals(sensorInfo1.getMax()) || !"".equals(sensorInfo1.getMin())) {
+                    returnData.setMax(Float.valueOf(sensorInfo1.getMax()));
+                    returnData.setMin(Float.valueOf(sensorInfo1.getMin()));
+
+                    returnData.setData(list);
+                    res.add(returnData);
+                }
+            }
         }
 
         return res;

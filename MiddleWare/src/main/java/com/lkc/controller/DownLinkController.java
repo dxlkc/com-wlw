@@ -1,5 +1,6 @@
 package com.lkc.controller;
 
+import com.lkc.coap.Coap;
 import com.lkc.model.DownLink.*;
 import com.lkc.model.Industry.deviceInfo.Rule;
 import com.lkc.service.DownInfoService;
@@ -10,7 +11,9 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping(value = "/user")
@@ -34,6 +37,26 @@ public class DownLinkController {
         String message = jsonObject.toString();
 
         return downInfoService.downData(message, deviceId, uid, sensorDebug.getTopic());
+    }
+
+    //下行 Coap
+    @PostMapping(value = "/coap/debug")
+    public String coapDebug(@RequestParam String ip, @RequestParam String content){
+        SensorDebug sensorDebug = new SensorDebug();
+        sensorDebug.setContent(content);
+
+        Coap coap = new Coap();
+        return coap.send(ip+"/control",sensorDebug);
+    }
+
+    //webssh调用
+    @PostMapping(value = "/coap/webssh")
+    public String useWebssh(@RequestParam String ip){
+        Map<String,String> map = new HashMap<>();
+        map.put("ip",ip);
+
+        Coap coap = new Coap();
+        return coap.send(ip+"/shell",map);
     }
 
     //通用下行信号

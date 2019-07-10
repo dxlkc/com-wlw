@@ -40,7 +40,6 @@ public class SensorController {
     @PostMapping(value = "/add/sensor")
     public SensorInfo add(@RequestBody SensorInfo sensorInfo) {
         return sensorDao.add(sensorInfo);
-
     }
 
     /****************更新********************/
