@@ -10,4 +10,7 @@ public interface UserFeignClient {
 
     @RequestMapping(value = "/handler/threshold",method = RequestMethod.POST)
     void thresholdHandler(@RequestParam String deviceId, @RequestBody Map<String, String> map, @RequestParam String time);
+
+    @RequestMapping(value = "/send/realtime", method = RequestMethod.POST)
+    void notice();
 }

@@ -168,9 +168,12 @@ public class UpCallback implements MqttCallback {
                     // 调用user service 进行 预警处理
                     try {
                         SaveData.saveData.thresholdHandler(MAC, threshold, Time);
-                    } catch (ClientException e) {
+                    } catch (RuntimeException e) {
                         logger.warn("向 user-service 请求预警处理失败...");
                     }
+
+                    //通知服务器发送实时数据
+                    SaveData.saveData.notice();
 
                 } //end if
             } //end run
@@ -218,8 +221,12 @@ public class UpCallback implements MqttCallback {
             saveData.mongoFeignClient.updatePinsState(deviceId, relayAddr, state);
         }
 
-        void thresholdHandler(String deviceId, Map<String, String> map, String time) throws ClientException {
+        void thresholdHandler(String deviceId, Map<String, String> map, String time) throws RuntimeException {
             saveData.userFeignClient.thresholdHandler(deviceId, map, time);
+        }
+
+        void notice(){
+            saveData.userFeignClient.notice();
         }
     }
 }

@@ -14,8 +14,6 @@ import java.util.List;
 public class DeviceController {
     @Resource
     private DeviceDao deviceDao;
-    @Resource
-    private IndustryService industryService;
 
     @PostMapping(value = "/all")
     public List<Device> findAllDevice() {

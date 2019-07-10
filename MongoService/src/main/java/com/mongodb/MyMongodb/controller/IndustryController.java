@@ -14,8 +14,6 @@ import javax.annotation.Resource;
 public class IndustryController {
     @Resource
     private IndustryDao industryDao;
-    @Resource
-    private IndustryService industryService;
 
     @PostMapping(value = "/find")
     public Industry findByIndustryId(@RequestParam String id) {

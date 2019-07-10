@@ -40,5 +40,5 @@ public interface RelayDao {
 
     long deleteByRelayAddr(String industryId, String deviceId, String relayAddr);
 
-    long deleteByMachineName(String industryId, String deviceId, String relayAddr, String machineName);
+    long deleteByMachinePosition(String industryId, String deviceId, String relayAddr, String machinePosition);
 }
