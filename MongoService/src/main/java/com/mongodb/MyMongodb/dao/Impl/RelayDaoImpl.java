@@ -108,7 +108,7 @@ public class RelayDaoImpl implements RelayDao {
     }
 
     //删除 machine ok
-    public long deleteByMachineName(String industryId, String deviceId, String relayAddr, String machinePosition) {
+    public long deleteByMachinePosition(String industryId, String deviceId, String relayAddr, String machinePosition) {
         Query query = new Query(Criteria.where("industryId").is(industryId)
                 .and("deviceId").is(deviceId)
                 .and("relayAddr").is(relayAddr));
@@ -155,7 +155,7 @@ public class RelayDaoImpl implements RelayDao {
                 .and("machinePosition").is(machinePosition));
         Update update = new Update();
 
-        update.set("machineList." + machineIndex + "machineName", newName);
+        update.set("machineList." + machineIndex + ".machineName", newName);
 
         UpdateResult result = mongoTemplate.updateMulti(query, update, Relay.class);
         return result.getModifiedCount();

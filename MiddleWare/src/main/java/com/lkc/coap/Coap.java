@@ -1,7 +1,6 @@
 package com.lkc.coap;
 
 import com.lkc.config.CoapConfig;
-import com.lkc.config.MqttConfig;
 import net.sf.json.JSONObject;
 import org.eclipse.californium.core.CoapClient;
 import org.eclipse.californium.core.CoapResponse;
@@ -22,7 +21,7 @@ public class Coap {
     public <T> String send(String URI, T object) {
         CoapResponse response = null;
 
-        if (null == URI || "".equals(URI)){
+        if (null == URI || "".equals(URI)) {
             URI = Config.getServerIp() + "/shell";
         }
 
@@ -67,6 +66,5 @@ public class Coap {
         public static String getServerIp() {
             return config.coapConfig.getServerIp();
         }
-
     }
 }
