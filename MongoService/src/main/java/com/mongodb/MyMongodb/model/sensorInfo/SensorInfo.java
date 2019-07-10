@@ -29,15 +29,15 @@ public class SensorInfo implements Serializable {
     //小数点位数 固定
     private String dicimal;
     //返回的数据长度 固定 用户填的
-    private String retLength;
+    private String returnLength;
     //最新值  从板子获取数据
     private String value;
     //value的更新时间 从板子获取数据
     private String time;
     //最大阈值 用户自定义
-    private String max="";
+    private String max = "";
     //最小阈值 用户自定义
-    private String min="";
+    private String min = "";
 
     public String getTime() {
         return time;
@@ -167,11 +167,11 @@ public class SensorInfo implements Serializable {
         this.min = min;
     }
 
-    public String getRetLength() {
-        return retLength;
+    public String getReturnLength() {
+        return returnLength;
     }
 
-    public void setRetLength(String retLength) {
-        this.retLength = retLength;
+    public void setReturnLength(String returnLength) {
+        this.returnLength = returnLength;
     }
 }

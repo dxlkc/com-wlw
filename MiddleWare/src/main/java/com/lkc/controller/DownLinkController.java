@@ -41,22 +41,22 @@ public class DownLinkController {
 
     //下行 Coap
     @PostMapping(value = "/coap/debug")
-    public String coapDebug(@RequestParam String ip, @RequestParam String content){
+    public String coapDebug(@RequestParam String ip, @RequestParam String content) {
         SensorDebug sensorDebug = new SensorDebug();
         sensorDebug.setContent(content);
 
         Coap coap = new Coap();
-        return coap.send(ip+"/control",sensorDebug);
+        return coap.send(ip + "/control", sensorDebug);
     }
 
     //webssh调用
     @PostMapping(value = "/coap/webssh")
-    public String useWebssh(@RequestParam String ip){
-        Map<String,String> map = new HashMap<>();
-        map.put("ip",ip);
+    public String useWebssh(@RequestParam String destip) {
+        Map<String, String> map = new HashMap<>();
+        map.put("ip", destip);
 
         Coap coap = new Coap();
-        return coap.send(ip+"/shell",map);
+        return coap.send(null,map);
     }
 
     //通用下行信号
@@ -125,7 +125,7 @@ public class DownLinkController {
     @PostMapping(value = "/down/addrelay/test")
     public String addRelayTest(@RequestParam String deviceId, @RequestParam String addr,
                                @RequestParam String code485,
-                               HttpServletRequest httpServletRequest){
+                               HttpServletRequest httpServletRequest) {
         HttpSession httpSession = httpServletRequest.getSession();
         String uid = httpSession.getId();
 
@@ -156,7 +156,7 @@ public class DownLinkController {
     @PostMapping(value = "/down/addrelay/confirm")
     public String addRelayConfirm(@RequestParam String deviceId, @RequestParam String addr,
                                   @RequestParam String code485,
-                                  HttpServletRequest httpServletRequest){
+                                  HttpServletRequest httpServletRequest) {
         HttpSession httpSession = httpServletRequest.getSession();
         String uid = httpSession.getId();
 
@@ -226,7 +226,7 @@ public class DownLinkController {
 
     //下行 删除一条规则
     @PostMapping(value = "/down/deleterule")
-    public String deleteRule(@RequestParam String deviceId, @RequestParam String ruleId, HttpServletRequest httpServletRequest){
+    public String deleteRule(@RequestParam String deviceId, @RequestParam String ruleId, HttpServletRequest httpServletRequest) {
         HttpSession httpSession = httpServletRequest.getSession();
         String uid = httpSession.getId();
 
@@ -244,7 +244,7 @@ public class DownLinkController {
     //下行 更新规则开关状态
     @PostMapping(value = "/down/updatestate")
     public String updateState(@RequestParam String deviceId, @RequestParam String ruleId, @RequestParam String switchState,
-                              HttpServletRequest httpServletRequest){
+                              HttpServletRequest httpServletRequest) {
         HttpSession httpSession = httpServletRequest.getSession();
         String uid = httpSession.getId();
 
@@ -258,7 +258,6 @@ public class DownLinkController {
         String message = jsonObject.toString();
         return downInfoService.downData(message, deviceId, uid, ruleInfo.getTopic());
     }
-
 }
 
 
