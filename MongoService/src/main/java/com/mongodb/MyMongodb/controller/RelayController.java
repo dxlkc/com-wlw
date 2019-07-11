@@ -85,7 +85,7 @@ public class RelayController {
 
     @PostMapping(value = "/delete/machine")
     public long deleteByMachinePosition(@RequestParam String industryId, @RequestParam String deviceId,
-                                    @RequestParam String relayAddr, @RequestParam String machinePosition) {
+                                        @RequestParam String relayAddr, @RequestParam String machinePosition) {
         return relayDao.deleteByMachinePosition(industryId, deviceId, relayAddr, machinePosition);
     }
 }

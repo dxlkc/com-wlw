@@ -33,13 +33,13 @@ public class SensorDaoImpl implements SensorDao {
     }
 
     //查找某个产业下的所有传感器
-    public List<SensorInfo> findAllByIndustryId(String industryId){
+    public List<SensorInfo> findAllByIndustryId(String industryId) {
         Query query = new Query(Criteria.where("industryId").is(industryId));
         return mongoTemplate.find(query, SensorInfo.class);
     }
 
     //查找传感器是否存在 通过 addr站号
-    public SensorInfo findByAddr(String deviceId, String sensorAddr, String type){
+    public SensorInfo findByAddr(String deviceId, String sensorAddr, String type) {
         Query query = new Query(Criteria.where("deviceId").is(deviceId)
                 .and("sensorAddr").is(sensorAddr)
                 .and("type").is(type));
@@ -56,14 +56,14 @@ public class SensorDaoImpl implements SensorDao {
     /***************删除************************/
 
     //删除industry下的所有 sensor
-    public long deleteAllByIndustryId(String industryId){
+    public long deleteAllByIndustryId(String industryId) {
         Query query = new Query(Criteria.where("industryId").is(industryId));
         DeleteResult result = mongoTemplate.remove(query, SensorInfo.class);
         return result.getDeletedCount();
     }
 
     //删除device 下的所有 sensor
-    public long deleteAllByDeviceId(String deviceId){
+    public long deleteAllByDeviceId(String deviceId) {
         Query query = new Query(Criteria.where("deviceId").is(deviceId));
         DeleteResult result = mongoTemplate.remove(query, SensorInfo.class);
         return result.getDeletedCount();
