@@ -35,6 +35,18 @@ public class SensorDefault {
     @Column(name = "returnlength")
     private String returnLength;
 
+    //是否为负数标识
+    @Column(name = "negative")
+    private String negative;
+
+    public String getNegative() {
+        return negative;
+    }
+
+    public void setNegative(String negative) {
+        this.negative = negative;
+    }
+
     public String getSensorAddr() {
         return sensorAddr;
     }

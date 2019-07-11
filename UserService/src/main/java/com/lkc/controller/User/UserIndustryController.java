@@ -29,26 +29,27 @@ public class UserIndustryController {
     }
 
 
-    @RequestMapping(value = "/add/userindustry",method = RequestMethod.POST)
-    public String addByindustry(@RequestParam String name,@RequestParam String industryId)
-    {
+    @RequestMapping(value = "/add/userindustry", method = RequestMethod.POST)
+    public String addByindustry(@RequestParam String name, @RequestParam String industryId) {
         Industry industry = industryService.findIndustry(industryId);
-        System.out.println(industryId + "   " + industry);
-        if(industry == null)
+        if (industry == null) {
             return "fail";
+        }
         industry.setAcqUnitList(null);
         JSONObject jsonObject = JSONObject.fromObject(industry);
         String jstr = jsonObject.toString();
-        String res = userIndustryService.addUserIndustry(name,industryId,"0");
-        if(!res.equals("success"))
+        String res = userIndustryService.addUserIndustry(name, industryId, "0");
+        if (!res.equals("success")) {
             return "fail";
-
+        }
         return jstr;
     }
+
     @RequestMapping(value = "/find", method = RequestMethod.POST)
     public String finUserIndustry(@RequestParam String name) {
         ArrayList<Industry> industries = new ArrayList<>();
         ArrayList<String> userindustries = userIndustryService.findUserindustryId(name);
+
         for (int i = 0; i < userindustries.size(); i++) {
             String id = userindustries.get(i);
             Industry industry = industryService.findIndustry(id);

@@ -7,15 +7,14 @@ import org.springframework.data.jpa.repository.Query;
 
 import javax.transaction.Transactional;
 
-
 public interface ContactRepository extends JpaRepository<UserContact, String> {
 
     UserContact findByName(String name);
 
     @Transactional
     @Modifying
-    @Query(value = "insert into contact_info(name,email,email_ctl) values(:name,:email,:email_ctl)",nativeQuery = true)
-    int save(String name, String email,String email_ctl);
+    @Query(value = "insert into contact_info(name,email,email_ctl) values(:name,:email,:email_ctl)", nativeQuery = true)
+    int save(String name, String email, String email_ctl);
 
     //改email
     @Transactional

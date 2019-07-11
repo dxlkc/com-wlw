@@ -13,6 +13,16 @@ public class Type {
     //小数点位数
     private String dicimal;
 
+    private String negative;
+
+    public String getNegative() {
+        return negative;
+    }
+
+    public void setNegative(String negative) {
+        this.negative = negative;
+    }
+
     public String getTypeName() {
         return typeName;
     }

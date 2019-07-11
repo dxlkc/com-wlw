@@ -10,7 +10,6 @@ public class MD5tool {
         return passwd;
     }
 
-
     public static String bytesToHexString(byte[] src) {
         StringBuilder stringBuilder = new StringBuilder("");
         if (src == null || src.length <= 0) {

@@ -1,6 +1,5 @@
 package com.lkc.model.industry.deviceInfo;
 
-
 //规则设备规则
 public class Rule {
     //自增,唯一

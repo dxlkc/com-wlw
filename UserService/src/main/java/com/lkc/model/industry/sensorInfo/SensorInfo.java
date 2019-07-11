@@ -26,7 +26,7 @@ public class SensorInfo implements Serializable {
     //小数点位数 固定  float或double
     private String dicimal;
     //最新值  从板子获取数据
-    private String value;
+    private String value = "0";
     //value值对应时间
     private String time;
     //返回数据的长度
@@ -35,6 +35,16 @@ public class SensorInfo implements Serializable {
     private String max;
     //最小阈值 用户自定义
     private String min;
+
+    private String negative;
+
+    public String getNegative() {
+        return negative;
+    }
+
+    public void setNegative(String negative) {
+        this.negative = negative;
+    }
 
     public String getIndustryId() {
         return industryId;

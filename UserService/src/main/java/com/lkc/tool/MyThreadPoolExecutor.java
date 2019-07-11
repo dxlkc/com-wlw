@@ -47,7 +47,6 @@ public class MyThreadPoolExecutor {
 
     //自定义拒绝策略 （阻塞添加）
     private class CustomRejectedExecutionHandler implements RejectedExecutionHandler {
-
         @Override
         public void rejectedExecution(Runnable r, ThreadPoolExecutor executor) {
             try {

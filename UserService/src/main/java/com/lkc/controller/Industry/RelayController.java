@@ -1,8 +1,8 @@
 package com.lkc.controller.Industry;
 
-import com.lkc.service.serviceInterface.Industry.RelayService;
 import com.lkc.FeignClient.mqttservice.DownDataDao;
 import com.lkc.model.industry.relayInfo.Relay;
+import com.lkc.service.serviceInterface.Industry.RelayService;
 import com.lkc.tool.CRC16M;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,7 +23,7 @@ public class RelayController {
         return relayService.findRelay(deviceId);
     }
 
-    ////relay详情显示
+    //relay详情显示
     @RequestMapping(value = "/message", method = RequestMethod.POST)
     public String findRelay(@RequestParam String deviceId, @RequestParam String relayAddr) {
         return relayService.findRelaydata(deviceId, relayAddr);
@@ -57,8 +57,6 @@ public class RelayController {
         return relayService.updateRelayInfo(industryId, deviceId, relayAddr, newName);
     }
 
-
-    //
     @RequestMapping(value = "/machine", method = RequestMethod.POST)
     public String updateMachineInfo(@RequestBody List<Map<String, String>> mapList) {
         return relayService.updateOradd(mapList);
