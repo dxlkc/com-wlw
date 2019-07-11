@@ -14,16 +14,16 @@ public class LogServiceImpl implements LogService {
     @Resource
     private InfluxdbDao influxdbDao;
 
-    public void addOpsLog(String industryId, CustomLogger customLogger){
+    public void addOpsLog(String industryId, CustomLogger customLogger) {
         Map<String, String> tags = new HashMap<>();
-        tags.put("type",customLogger.getType());
-        tags.put("deviceId",customLogger.getDeviceId());
+        tags.put("type", customLogger.getType());
+        tags.put("deviceId", customLogger.getDeviceId());
 
         Map<String, Object> fields = new HashMap<>();
-        fields.put("message",customLogger.getMessage());
-        fields.put("result",customLogger.getResult());
+        fields.put("message", customLogger.getMessage());
+        fields.put("result", customLogger.getResult());
 
-        influxdbDao.insert(industryId+"_opslog",tags,fields);
+        influxdbDao.insert(industryId + "_opslog", tags, fields);
     }
 
 }

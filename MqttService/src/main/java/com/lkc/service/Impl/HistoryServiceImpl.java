@@ -32,7 +32,7 @@ public class HistoryServiceImpl implements HistoryService {
             ArrayList<HistoryData> list =
                     influxdbDao.findByTime(start, end, measurement);
 
-            if (0 == list.size()){
+            if (0 == list.size()) {
                 continue;
             }
 
