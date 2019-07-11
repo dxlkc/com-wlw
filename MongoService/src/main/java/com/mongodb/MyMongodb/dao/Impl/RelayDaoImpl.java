@@ -118,6 +118,15 @@ public class RelayDaoImpl implements RelayDao {
         return result.getModifiedCount();
     }
 
+    public long deleteMachineByPosition(String deviceId, String relayAddr, String machinePosition) {
+        Query query = new Query(Criteria.where("deviceId").is(deviceId)
+                .and("relayAddr").is(relayAddr));
+        Update update = new Update();
+        update.pull("machineList", new BasicDBObject("machinePosition", machinePosition));
+        UpdateResult result = mongoTemplate.updateFirst(query, update, Relay.class);
+        return result.getModifiedCount();
+    }
+
     /***********更新********************/
 
     //更新 relay 名字 ok
@@ -150,14 +159,16 @@ public class RelayDaoImpl implements RelayDao {
         Relay relay = find(deviceId, relayAddr);
         int machineIndex = relay.getMachineIndexByPosition(machinePosition);
 
-        Query query = new Query(Criteria.where("deviceId").is(deviceId)
-                .and("relayAddr").is(relayAddr)
-                .and("machinePosition").is(machinePosition));
-        Update update = new Update();
+        if (" ".equals(newName)) {
+            return deleteMachineByPosition(deviceId, relayAddr, machinePosition);
+        }
 
+        Query query = new Query(Criteria.where("deviceId").is(deviceId)
+                .and("relayAddr").is(relayAddr));
+        Update update = new Update();
         update.set("machineList." + machineIndex + ".machineName", newName);
 
-        UpdateResult result = mongoTemplate.updateMulti(query, update, Relay.class);
+        UpdateResult result = mongoTemplate.updateFirst(query, update, Relay.class);
         return result.getModifiedCount();
     }
 
