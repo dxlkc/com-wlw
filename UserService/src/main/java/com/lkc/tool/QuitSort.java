@@ -6,6 +6,7 @@ import com.lkc.model.industry.sensorInfo.SensorInfo;
 import java.util.List;
 
 public class QuitSort {
+
     public static void quickSort(List<SensorInfo> arr, int start, int end) {
         if (start >= end) {
             return;

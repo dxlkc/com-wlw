@@ -16,13 +16,7 @@ import java.util.List;
 @Service
 public class IndustryServiceImpl implements IndustryService {
     @Resource
-    private IndustryDao industryDao;
-    @Resource
-    private DeviceDao deviceDao;
-    @Resource
     private RelayDao relayDao;
-    @Resource
-    private SensorDao sensorDao;
 
     //修改继电器状态 （同时修改继电器下设备的状态）
     public long updateRelayPinsState(String deviceId, String relayAddr, String newPinsState) {
@@ -35,13 +29,13 @@ public class IndustryServiceImpl implements IndustryService {
         List<Machine> machineList = relay.getMachineList();
 
         for (Machine machine : machineList) {
-            int state = 0x1 & (pinsState >> (Integer.valueOf(machine.getMachinePosition())-1));
+            int state = 0x1 & (pinsState >> (Integer.valueOf(machine.getMachinePosition()) - 1));
             relayDao.updateMachineState(deviceId, relayAddr, machine.getMachinePosition(), String.valueOf(state));
         }
 
         //状态转换成 "10000011" 右边开始1-8路状态 1为开 0为关
         StringBuilder allState = new StringBuilder();
-        for(int i = 7; i >= 0; i--){
+        for (int i = 7; i >= 0; i--) {
             allState.append(0x1 & pinsState >> i);
         }
 

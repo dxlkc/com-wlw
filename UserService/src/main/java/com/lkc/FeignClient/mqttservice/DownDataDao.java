@@ -13,7 +13,6 @@ public interface DownDataDao {
     @PostMapping(value = "/user/down/debug")
     String debug(@RequestParam String content, @RequestParam String deviceId);
 
-    //xingjia
     //下行 用户API调试接口（coap debug）
     @PostMapping(value = "/user/coap/debug")
     String coapDebug(@RequestParam String ip, @RequestParam String content);

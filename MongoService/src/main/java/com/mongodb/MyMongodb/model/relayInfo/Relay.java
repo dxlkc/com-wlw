@@ -19,7 +19,7 @@ public class Relay implements Serializable {
     //继电器 站号 固定值 用户填入
     private String relayAddr;
     //继电器 八路状态 从板子数据获取
-    private String pinsState="0";
+    private String pinsState = "0";
     //强电设备表
     private ArrayList<Machine> machineList = new ArrayList<>();
 

@@ -2,10 +2,10 @@ package com.lkc.controller.Industry;
 
 import com.lkc.model.returndata.Industrydata;
 import com.lkc.model.returndata.Unitdata;
-
-import com.lkc.service.serviceInterface.Industry.IndustryService;
 import com.lkc.service.serviceInterface.Data.IndustrydataService;
 import com.lkc.service.serviceInterface.Data.UnitdataService;
+import com.lkc.service.serviceInterface.Industry.IndustryService;
+
 import net.sf.json.JSONArray;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -25,19 +25,16 @@ public class IndustryController {
     @Resource
     private UnitdataService unitdataService;
 
-
     @RequestMapping(value = "/findall", method = RequestMethod.POST)
     public String findall(@RequestParam String id) {
         Industrydata industrydata = industrydataService.findall(id);
         JSONArray jsonarray = JSONArray.fromObject(industrydata);
-        String jsonstr = jsonarray.toString();
-        return jsonstr;
+        return jsonarray.toString();
     }
 
     @RequestMapping(value = "/find/unit", method = RequestMethod.POST)
     public List<Unitdata> findunit(@RequestParam String id) {
-        List<Unitdata> unitdataList = unitdataService.findunit(id);
-        return unitdataList;
+        return unitdataService.findunit(id);
     }
 
     @RequestMapping(value = "/find/value", method = RequestMethod.POST)
@@ -68,9 +65,11 @@ public class IndustryController {
     /************删除**********/
 
     @RequestMapping(value = "/delete/industry", method = RequestMethod.POST)
-    public String deleteByIndustryId(@RequestParam String name,@RequestParam String id) {
+    public String deleteByIndustryId(@RequestParam String name, @RequestParam String id) {
 
-        return industryService.deleteIndustry(name,id);
+        String res = industryService.deleteIndustry(name, id);
+        System.out.println("delete industry          " + res);
+        return res;
     }
 
     @RequestMapping(value = "/delete/unit", method = RequestMethod.POST)

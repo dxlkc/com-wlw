@@ -31,7 +31,7 @@ public class DeviceController {
     }
 
     @PostMapping(value = "/findRule")
-    public List<Rule> findAllRule(@RequestParam String deviceId){
+    public List<Rule> findAllRule(@RequestParam String deviceId) {
         return deviceDao.findAllRule(deviceId);
     }
 
@@ -91,23 +91,23 @@ public class DeviceController {
     /*******************************************************************************************/
 
     @PostMapping("/add/rule")
-    public long addRule(@RequestParam String deviceId, @RequestBody Rule rule){
+    public long addRule(@RequestParam String deviceId, @RequestBody Rule rule) {
         return deviceDao.addRule(deviceId, rule);
     }
 
     @PostMapping("/update/switchState")
     public long updateSwitchState(@RequestParam String deviceId, @RequestParam String ruleId,
-                                  @RequestParam String switchState){
+                                  @RequestParam String switchState) {
         return deviceDao.updateRuleSwitch(deviceId, ruleId, switchState);
     }
 
     @PostMapping("/delete/rule")
-    public long deleteRule(@RequestParam String deviceId, @RequestParam String ruleId){
+    public long deleteRule(@RequestParam String deviceId, @RequestParam String ruleId) {
         return deviceDao.deleteRule(deviceId, ruleId);
     }
 
     @PostMapping("/delete/allrule")
-    public long deleteAllRule(@RequestParam String deviceId){
+    public long deleteAllRule(@RequestParam String deviceId) {
         return deviceDao.deleteAllRule(deviceId);
     }
 

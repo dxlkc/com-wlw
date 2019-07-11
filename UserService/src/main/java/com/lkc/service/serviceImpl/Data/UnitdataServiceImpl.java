@@ -17,28 +17,25 @@ import java.util.List;
 public class UnitdataServiceImpl implements UnitdataService {
     @Resource
     private IndustryDao industryDao;
-
     @Resource
     private DeviceDao deviceDao;
 
     @Override
     public List<Unitdata> findunit(String id) {
-        System.out.println(id);
         List<Unitdata> unitdata = new ArrayList<>();
         Industry industry = industryDao.findByIndustryId(id);
         List<AcqUnit> acqUnits = industry.getAcqUnitList();
-        for(int i = 0;i<acqUnits.size();i++)
-        {
+
+        for (int i = 0; i < acqUnits.size(); i++) {
             Unitdata unitdata1 = new Unitdata();
             unitdata1.setUnitId(acqUnits.get(i).getUnitId());
             unitdata1.setUnitName(acqUnits.get(i).getUnitName());
             unitdata1.setUnitRemark(acqUnits.get(i).getUnitRemark());
-            List<Device> devices = deviceDao.findAll(id,acqUnits.get(i).getUnitId());
+            List<Device> devices = deviceDao.findAll(id, acqUnits.get(i).getUnitId());
             System.out.println(devices.size());
             String num = String.valueOf(devices.size());
             unitdata1.setUnitDeviceNum(num);
             unitdata.add(unitdata1);
-            unitdata1 = null;
         }
         return unitdata;
     }

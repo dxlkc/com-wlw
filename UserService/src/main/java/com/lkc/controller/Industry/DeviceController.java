@@ -12,14 +12,8 @@ import java.util.Map;
 public class DeviceController {
     @Resource
     private DeviceService deviceService;
-
     @Resource
     private DownDataDao downDataDao;
-
-    @RequestMapping(value = "/find", method = RequestMethod.POST)
-    public String findByDeviceId(@RequestParam String deviceId) {
-        return deviceService.findDevice(deviceId);
-    }
 
     @RequestMapping(value = "/findall", method = RequestMethod.POST)
     public String findAll(@RequestParam String industryId, @RequestParam String unitId) {
@@ -60,13 +54,7 @@ public class DeviceController {
     public String addDevice(@RequestParam String industryId, @RequestParam String unitId,
                             @RequestParam String deviceId, @RequestParam String deviceName,
                             @RequestParam String deviceRemark, @RequestParam String sendRate) {
-        String res;
-//        res = deviceService.findDevice(deviceId);
-//        if (res == null) {
-        res = deviceService.addDevice(industryId, unitId, deviceId, deviceName, deviceRemark, sendRate);
-//        } else {
-//            deviceService.updateDeviceInfo(industryId,deviceId, deviceName, deviceRemark,sendRate);
-//        }
+        String res = deviceService.addDevice(industryId, unitId, deviceId, deviceName, deviceRemark, sendRate);
         downDataDao.subscribe(deviceId);
         return res;
     }

@@ -23,7 +23,7 @@ public class DeviceDaoImpl implements DeviceDao {
     private MongoTemplate mongoTemplate;
 
     // 查找所有板子
-    public List<Device> findAllDevice(){
+    public List<Device> findAllDevice() {
         return mongoTemplate.findAll(Device.class);
     }
 
@@ -40,9 +40,9 @@ public class DeviceDaoImpl implements DeviceDao {
     }
 
     //deviceId 查找所有设备下的规则
-    public List<Rule> findAllRule(String deviceId){
+    public List<Rule> findAllRule(String deviceId) {
         Query query = new Query(Criteria.where("deviceId").is(deviceId));
-        Device device = mongoTemplate.findOne(query,Device.class);
+        Device device = mongoTemplate.findOne(query, Device.class);
 
         return null == device ? null : device.getRules();
     }
@@ -50,7 +50,7 @@ public class DeviceDaoImpl implements DeviceDao {
     /*********************************************更新信息部分*************************************************************/
 
     //更新板子连接状态
-    public long updateLinkState(String deviceId, String linkState){
+    public long updateLinkState(String deviceId, String linkState) {
         Query query = new Query(Criteria.where("deviceId").is(deviceId));
         Update update = new Update();
         update.set("linkState", linkState);
@@ -104,14 +104,14 @@ public class DeviceDaoImpl implements DeviceDao {
     /*********************************************删除信息部分*************************************************************/
 
     //删除industry下的所有 device
-    public long deleteAllByIndustryId(String industryId){
+    public long deleteAllByIndustryId(String industryId) {
         Query query = new Query(Criteria.where("industryId").is(industryId));
         DeleteResult result = mongoTemplate.remove(query, Device.class);
         return result.getDeletedCount();
     }
 
     //删除acqUnit 下的所有 device
-    public long deleteAllByIndustryIdAndUnitId(String industryId, String unitId){
+    public long deleteAllByIndustryIdAndUnitId(String industryId, String unitId) {
         Query query = new Query(Criteria.where("industryId").is(industryId).and("unitId").is(unitId));
         DeleteResult result = mongoTemplate.remove(query, Device.class);
         return result.getDeletedCount();
@@ -145,7 +145,7 @@ public class DeviceDaoImpl implements DeviceDao {
     /*******************************************************************************************/
 
     //添加一条规则
-    public long addRule(String deviceId, Rule rule){
+    public long addRule(String deviceId, Rule rule) {
         Query query = new Query(Criteria.where("deviceId").is(deviceId));
         Update update = new Update();
         update.addToSet("rules", rule);
@@ -154,19 +154,19 @@ public class DeviceDaoImpl implements DeviceDao {
     }
 
     //开启/关闭 规则
-    public long updateRuleSwitch(String deviceId, String ruleId, String switchState){
+    public long updateRuleSwitch(String deviceId, String ruleId, String switchState) {
         Device device = findByDeviceId(deviceId);
         int index = device.getRuleInduxByRuleId(ruleId);
 
         Query query = new Query(Criteria.where("deviceId").is(deviceId));
         Update update = new Update();
-        update.set("rules." + index + ".switchState",switchState);
-        UpdateResult result = mongoTemplate.updateMulti(query,update,Device.class);
-        return  result.getModifiedCount();
+        update.set("rules." + index + ".switchState", switchState);
+        UpdateResult result = mongoTemplate.updateMulti(query, update, Device.class);
+        return result.getModifiedCount();
     }
 
     //删除一条规则
-    public long deleteRule(String deviceId, String ruleId){
+    public long deleteRule(String deviceId, String ruleId) {
         Query query = new Query(Criteria.where("deviceId").is(deviceId));
         Update update = new Update();
         update.pull("rules", new BasicDBObject("ruleId", ruleId));
@@ -175,7 +175,7 @@ public class DeviceDaoImpl implements DeviceDao {
     }
 
     //删除所有规则
-    public long deleteAllRule(String deviceId){
+    public long deleteAllRule(String deviceId) {
         Query query = new Query(Criteria.where("deviceId").is(deviceId));
         Update update = new Update();
         update.unset("rules");

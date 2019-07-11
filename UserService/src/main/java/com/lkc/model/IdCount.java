@@ -1,6 +1,6 @@
 package com.lkc.model;
 
-
+//产业/采集点 id
 public class IdCount {
     public int IndustryCount = 0;
     public int AcqUnitCount = 0;

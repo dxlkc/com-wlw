@@ -7,12 +7,12 @@ import com.lkc.service.serviceInterface.MqttService.DowndataService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.util.List;
 
 @Service
 public class DowndataServiceImpl implements DowndataService {
-
-    @Autowired
+    @Resource
     DownDataDao downDataDao;
 
     @Override
@@ -26,7 +26,7 @@ public class DowndataServiceImpl implements DowndataService {
         sensor.setAddr(addr);
         sensor.setTarget(target);
         sensor.setTopic(topic);
-        return  downDataDao.addConfirm(sensor,deviceId);
+        return downDataDao.addConfirm(sensor, deviceId);
     }
 
     @Override
@@ -39,7 +39,6 @@ public class DowndataServiceImpl implements DowndataService {
         sensor.setAddr(addr);
         sensor.setTarget(target);
         sensor.setTopic(topic);
-        return downDataDao.addTest(sensor,deviceId);
+        return downDataDao.addTest(sensor, deviceId);
     }
-
 }

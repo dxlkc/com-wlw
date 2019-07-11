@@ -39,7 +39,7 @@ public class Device implements Serializable {
         this.linkState = "0";
     }
 
-    public int getRuleInduxByRuleId(String id){
+    public int getRuleInduxByRuleId(String id) {
         for (int i = 0; i < rules.size(); i++) {
             if (id.equals(rules.get(i).getRuleId())) {
                 return i;

@@ -1,9 +1,9 @@
 package com.lkc.controller.Industry;
 
-import com.lkc.service.serviceInterface.Industry.SensorService;
-import com.lkc.FeignClient.mongoservice.SensorDao;
 import com.lkc.FeignClient.mqttservice.DownDataDao;
 import com.lkc.model.industry.sensorInfo.Sensor;
+import com.lkc.service.serviceInterface.Industry.SensorService;
+import com.lkc.FeignClient.mongoservice.SensorDao;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;

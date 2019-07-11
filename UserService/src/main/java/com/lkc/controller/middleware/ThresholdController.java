@@ -26,7 +26,7 @@ public class ThresholdController {
 
     //发送一条实时数据
     @PostMapping(value = "/send/realtime")
-    public void notic(){
+    public void notic() {
         sendThread.send();
     }
 

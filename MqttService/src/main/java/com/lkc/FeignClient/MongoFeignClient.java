@@ -36,7 +36,7 @@ public interface MongoFeignClient {
     List<Device> findAllDevice();
 
     //修改设备连接状态
-    @RequestMapping(value = "/device/update/linkstate",method = RequestMethod.POST)
+    @RequestMapping(value = "/device/update/linkstate", method = RequestMethod.POST)
     long updateLinkState(@RequestParam String deviceId, @RequestParam String linkState);
 
     //修改继电器状态
@@ -50,5 +50,5 @@ public interface MongoFeignClient {
 
     @PostMapping(value = "/sensor/confirm/addr")
     SensorInfo findByAddrAndType(@RequestParam String deviceId, @RequestParam String sensorAddr,
-                                  @RequestParam String type);
+                                 @RequestParam String type);
 }

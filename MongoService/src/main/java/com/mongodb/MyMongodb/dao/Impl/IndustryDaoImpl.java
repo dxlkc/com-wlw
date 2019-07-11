@@ -17,7 +17,7 @@ import org.springframework.stereotype.Component;
 import javax.annotation.Resource;
 
 @Component
-public class IndustryDaoImpl implements IndustryDao{
+public class IndustryDaoImpl implements IndustryDao {
     @Resource
     private MongoTemplate mongoTemplate;
 
@@ -36,7 +36,7 @@ public class IndustryDaoImpl implements IndustryDao{
         update.set("industryName", industryName);
         update.set("industryRemark", industryRemark);
         UpdateResult result = mongoTemplate.upsert(query, update, Industry.class);
-        return  result.getModifiedCount();
+        return result.getModifiedCount();
     }
 
     //更新采集点信息
@@ -56,10 +56,10 @@ public class IndustryDaoImpl implements IndustryDao{
     }
 
     //更新采集点数量
-    public long updateAcqNum(@NotNull String industryId, String industryUnitNum){
+    public long updateAcqNum(@NotNull String industryId, String industryUnitNum) {
         Query query = new Query(Criteria.where("industryId").is(industryId));
         Update update = new Update();
-        update.set("industryUnitNum",industryUnitNum);
+        update.set("industryUnitNum", industryUnitNum);
         UpdateResult result = mongoTemplate.updateMulti(query, update, Industry.class);
         return result.getModifiedCount();
     }
@@ -77,7 +77,7 @@ public class IndustryDaoImpl implements IndustryDao{
     public long deleteByAcqUnitId(String industryId, String unitId) {
         Query query = new Query(Criteria.where("industryId").is(industryId));
         Update update = new Update();
-        update.pull("acqUnitList",new BasicDBObject("unitId",unitId));
+        update.pull("acqUnitList", new BasicDBObject("unitId", unitId));
         UpdateResult result = mongoTemplate.updateFirst(query, update, Industry.class);
         return result.getModifiedCount();
     }

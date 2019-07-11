@@ -25,13 +25,13 @@ public class SensorController {
     }
 
     @PostMapping(value = "/find/AllByIndustryId")
-    public List<SensorInfo> findAllByIndustryId(@RequestParam String industryId){
+    public List<SensorInfo> findAllByIndustryId(@RequestParam String industryId) {
         return sensorDao.findAllByIndustryId(industryId);
     }
 
     @PostMapping(value = "/confirm/addr")
     public SensorInfo confirmAddr(@RequestParam String deviceId, @RequestParam String sensorAddr,
-                            @RequestParam String type){
+                                  @RequestParam String type) {
         return sensorDao.findByAddr(deviceId, sensorAddr, type);
     }
 
@@ -46,7 +46,7 @@ public class SensorController {
 
     @PostMapping(value = "/update/name")
     public long updateName(@RequestParam String deviceId, @RequestParam String sensorAddr,
-                           @RequestParam String name){
+                           @RequestParam String name) {
         return sensorDao.updateName(deviceId, sensorAddr, name);
     }
 

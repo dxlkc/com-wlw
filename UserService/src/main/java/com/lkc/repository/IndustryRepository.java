@@ -14,7 +14,7 @@ public interface IndustryRepository extends JpaRepository<UserIndustry, String> 
 
     UserIndustry deleteByNameAndIndustryId(String name, String industryId);
 
-    UserIndustry findByIndustryIdAndName(String industryID,String name);
+    UserIndustry findByIndustryIdAndName(String industryID, String name);
 
     @Transactional
     @Modifying

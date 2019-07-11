@@ -16,7 +16,6 @@ public class UserContact {
     private String email;
     @Column(name = "email_ctl")
     private String email_ctl;
-
     @Column(name = "phone_ctl")
     private String phone_ctl;
 

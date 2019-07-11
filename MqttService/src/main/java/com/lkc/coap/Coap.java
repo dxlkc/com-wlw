@@ -63,7 +63,7 @@ public class Coap {
             config.coapConfig = this.coapConfig;
         }
 
-        public static String getServerIp() {
+        static String getServerIp() {
             return config.coapConfig.getServerIp();
         }
     }

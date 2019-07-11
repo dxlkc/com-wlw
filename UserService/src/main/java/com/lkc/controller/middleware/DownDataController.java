@@ -19,16 +19,19 @@ public class DownDataController {
     //下行 用户API调试接口（debug）
     @RequestMapping(value = "/debug", method = RequestMethod.POST)
     public String debug(@RequestParam String content, @RequestParam String deviceId) {
+        if (content == null || content.isEmpty()) {
+            return "指令为空";
+        }
+        System.out.println("content      " + content + " deviceId     " + deviceId);
         return downDataDao.debug(content, deviceId);
     }
 
-    //xingjia
     //用Coap进行debug
     @RequestMapping(value = "/coap/debug", method = RequestMethod.POST)
     public String coapDebug(@RequestParam String ip, @RequestParam String content) {
-        return downDataDao.coapDebug(ip,content);
+        System.out.println("ip    " + ip + " content   " + content);
+        return downDataDao.coapDebug(ip, content);
     }
-
 
     //下行 控制信号（控制继电器 溶解氧 等设备）
     @RequestMapping(value = "/down/control", method = RequestMethod.POST)
@@ -68,13 +71,12 @@ public class DownDataController {
     @RequestMapping(value = "/find/history", method = RequestMethod.POST)
     public String findHistory(@RequestParam String start, @RequestParam String end,
                               @RequestParam String deviceId) {
-        String res = downDataDao.findHistory(start, end, deviceId);
-        return res;
+        return downDataDao.findHistory(start, end, deviceId);
     }
 
     //用coap 调用 webssh
     @RequestMapping(value = "/webssh", method = RequestMethod.POST)
-    public String coapWebssh(@RequestParam String ip){
+    public String coapWebssh(@RequestParam String ip) {
         return downDataDao.useWebssh(ip);
     }
 

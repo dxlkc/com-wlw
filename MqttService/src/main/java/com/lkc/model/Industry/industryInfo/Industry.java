@@ -12,16 +12,16 @@ public class Industry implements Serializable {
     //产业创建时间 前端传的值 固定
     private String industryTime;
     //用户备注 用户自定义
-    private String industryRemark="";
+    private String industryRemark = "";
     //采集单元
     private ArrayList<AcqUnit> acqUnitList = new ArrayList<>();
     //采集单元数量
     private String industryUnitNum;
 
     //获取某个采集单元
-    public AcqUnit getUnitById(String unitId){
-        for(AcqUnit acqUnit : acqUnitList){
-            if (acqUnit.getUnitId().equals(unitId)){
+    public AcqUnit getUnitById(String unitId) {
+        for (AcqUnit acqUnit : acqUnitList) {
+            if (acqUnit.getUnitId().equals(unitId)) {
                 return acqUnit;
             }
         }
@@ -29,9 +29,9 @@ public class Industry implements Serializable {
     }
 
     //获取某个采集单元 在数组中的位置
-    public int getUnitIndexById(String unitId){
-        for(int i=0; i<acqUnitList.size(); i++){
-            if (acqUnitList.get(i).getUnitId().equals(unitId)){
+    public int getUnitIndexById(String unitId) {
+        for (int i = 0; i < acqUnitList.size(); i++) {
+            if (acqUnitList.get(i).getUnitId().equals(unitId)) {
                 return i;
             }
         }

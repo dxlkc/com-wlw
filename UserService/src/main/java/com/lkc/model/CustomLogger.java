@@ -8,7 +8,7 @@ public class CustomLogger {
     private String message;
     //操作结果
     private String result;
-
+    //设备id
     private String deviceId;
 
     public String getTime() {
