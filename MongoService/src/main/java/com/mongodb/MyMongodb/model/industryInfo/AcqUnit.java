@@ -11,7 +11,7 @@ public class AcqUnit implements Serializable {
     //采集点id 默认自增
     private String unitId;
     //采集单元用户备注 用户自定义
-    private String unitRemark="";
+    private String unitRemark = "";
 
     public String getUnitName() {
         return unitName;
