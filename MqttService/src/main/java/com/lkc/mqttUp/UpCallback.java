@@ -162,7 +162,7 @@ public class UpCallback implements MqttCallback {
                         SaveData.saveData.updataLocation(MAC, String.valueOf(longitude_degree), String.valueOf(latitude_degree), RMC_detail);
                         SaveData.saveData.updateSendRate(MAC, sendRate);
                     } else {
-                        // 调用mongodb 存经 sendRate
+                        // 调用mongodb 存 sendRate
                         SaveData.saveData.updateSendRate(MAC, sendRate);
                     }
                     // 调用user service 进行 预警处理
