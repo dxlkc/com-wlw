@@ -12,6 +12,16 @@ public class Type {
     private String dataDefine;
     //小数点位数
     private String dicimal;
+    //值是否可以为负数  1:可以为负数 0:不可以为负数
+    private String negative;
+
+    public String getNegative() {
+        return negative;
+    }
+
+    public void setNegative(String negative) {
+        this.negative = negative;
+    }
 
     public String getTypeName() {
         return typeName;

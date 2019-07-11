@@ -5,8 +5,6 @@ import java.io.Serializable;
 public class SensorInfo implements Serializable {
     //产业ID 固定
     private String industryId;
-    //采集单元id 固定
-    private String unitId;
     //板子ID 固定
     private String deviceId;
     //传感器名 用户自定义
@@ -27,6 +25,8 @@ public class SensorInfo implements Serializable {
     private String dicimal;
     //返回的数据长度 固定 用户填的
     private String returnLength;
+    //值是否可以为负数  1:可以为负数 0:不可以为负数
+    private String negative;
     //value的更新时间 从板子获取数据
     private String time;
     //最新值  从板子获取数据
@@ -35,6 +35,14 @@ public class SensorInfo implements Serializable {
     private String max="";
     //最小阈值 用户自定义
     private String min="";
+
+    public String getNegative() {
+        return negative;
+    }
+
+    public void setNegative(String negative) {
+        this.negative = negative;
+    }
 
     public String getTime() {
         return time;
@@ -66,14 +74,6 @@ public class SensorInfo implements Serializable {
 
     public void setIndustryId(String industryId) {
         this.industryId = industryId;
-    }
-
-    public String getUnitId() {
-        return unitId;
-    }
-
-    public void setUnitId(String unitId) {
-        this.unitId = unitId;
     }
 
     public String getDeviceId() {

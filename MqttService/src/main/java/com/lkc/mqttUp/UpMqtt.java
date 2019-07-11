@@ -73,7 +73,6 @@ public class UpMqtt {
             client.publish(topic, new MqttMessage(message.getBytes()));
         } catch (Exception e) {
             logger.warn("上行--发布信息异常 ：" + e.getMessage());
-            ;
         }
     }
 
@@ -126,9 +125,8 @@ public class UpMqtt {
             config.mqttConfig = this.mqttConfig;
         }
 
-        public static String getHost() {
+        static String getHost() {
             return config.mqttConfig.getHost();
         }
-
     }
 }

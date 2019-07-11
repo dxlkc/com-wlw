@@ -225,7 +225,7 @@ public class UpCallback implements MqttCallback {
             saveData.userFeignClient.thresholdHandler(deviceId, map, time);
         }
 
-        void notice(){
+        void notice() {
             saveData.userFeignClient.notice();
         }
     }
